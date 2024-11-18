@@ -21,7 +21,6 @@ import com.outrageouscat.shufflefriends.data.datastore.participantsListDataStore
 import com.outrageouscat.shufflefriends.data.datastore.resultsDataStore
 import com.outrageouscat.shufflefriends.data.models.Participant
 import com.outrageouscat.shufflefriends.data.models.ParticipantsList
-import com.outrageouscat.shufflefriends.datastore.ResultsProto
 import com.outrageouscat.shufflefriends.datastore.ResultsProto.ParticipantLocal
 import com.outrageouscat.shufflefriends.datastore.ResultsProto.ResultsList
 import com.outrageouscat.shufflefriends.ui.dialogs.ClearParticipantsConfirmationDialog
