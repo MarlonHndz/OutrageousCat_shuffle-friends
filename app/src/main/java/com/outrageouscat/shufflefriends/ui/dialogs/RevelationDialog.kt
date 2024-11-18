@@ -1,18 +1,13 @@
-package com.outrageouscat.shufflefriends.ui.Dialogs
+package com.outrageouscat.shufflefriends.ui.dialogs
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,12 +16,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
-
 @Composable
-fun EditParticipantDialog(
-    name: String,
-    onNameChange: (String) -> Unit,
-    onSave: () -> Unit,
+fun RevelationDialog(
+    participants: List<String>,
+    results: Map<String, String>,
+    selectedIndex: Int,
     onDismiss: () -> Unit
 ) {
     Dialog(onDismissRequest = onDismiss) {
@@ -38,21 +32,28 @@ fun EditParticipantDialog(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Editar Participante", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = "El amigo secreto",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.W500
+                )
                 Spacer(modifier = Modifier.height(16.dp))
-                TextField(value = name, onValueChange = onNameChange, label = { Text("Nombre") })
+                Text(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    text = "De: ${participants[selectedIndex]}",
+                    fontSize = 20.sp,
+                )
+                Text(
+                    modifier = Modifier.padding(vertical = 0.dp),
+                    text = "Es: ${results[participants[selectedIndex]]}",
+                    fontSize = 20.sp,
+                )
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
+                Button(
+                    onClick = onDismiss
                 ) {
-                    Button(onClick = onDismiss) {
-                        Text("Cancelar")
-                    }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Button(onClick = onSave) {
-                        Text("Guardar")
-                    }
+                    Text("Cerrar")
                 }
             }
         }

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.google.protobuf)
 }
 
 android {
@@ -37,6 +38,25 @@ android {
     }
 }
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.28.3"
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
+}
+
 dependencies {
 
     // Android
@@ -54,7 +74,9 @@ dependencies {
     // Store
     implementation libs.kotlin.serialization
     implementation libs.google.gson
+    implementation libs.google.protobuf
     implementation libs.androidx.datastore.preferences
+    implementation libs.androidx.datastore.core
 
     // Coroutines
     implementation libs.kotlin.coroutines

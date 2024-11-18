@@ -2,6 +2,7 @@
 agp = "8.7.2"
 kotlin = "2.0.20"
 ktPluginSerialization = "2.0.21"
+protobufPlugin = "0.9.3"
 
 coreKtx = "1.15.0"
 lifecycleRuntimeKtx = "2.8.7"
@@ -10,7 +11,8 @@ navigationCompose = "2.8.4"
 composeBom = "2024.11.00"
 
 serialization = "1.7.3"
-gson ="2.11.0"
+gson = "2.11.0"
+protobuf = "4.28.3"
 dataStore = "1.1.1"
 
 coroutines = "1.8.1"
@@ -28,13 +30,16 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-compose-navigation = { group="androidx.navigation", name="navigation-compose", version.ref="navigationCompose"}
+androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
-kotlin-serialization = { group = "org.jetbrains.kotlinx", name="kotlinx-serialization-json", version.ref= "serialization" }
-google-gson = {group="com.google.code.gson", name ="gson", version.ref = "gson"}
+kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+google-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+google-protobuf = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "dataStore" }
 
-kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref ="coroutines"}
+
+kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -49,4 +54,5 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "ktPluginSerialization" }
+google-protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 

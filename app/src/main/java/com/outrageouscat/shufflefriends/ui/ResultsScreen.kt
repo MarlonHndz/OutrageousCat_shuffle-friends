@@ -1,5 +1,9 @@
 package com.outrageouscat.shufflefriends.ui
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -41,19 +46,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.outrageouscat.shufflefriends.R
-import com.outrageouscat.shufflefriends.ui.Dialogs.RevelationDialog
+import com.outrageouscat.shufflefriends.data.datastore.resultsDataStore
+import com.outrageouscat.shufflefriends.datastore.ResultsProto.ResultsList
+import com.outrageouscat.shufflefriends.ui.dialogs.RevelationDialog
 import kotlinx.coroutines.launch
+import kotlin.String
 import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResultsScreen(
+    context: Context,
     modifier: Modifier,
-    results: Map<String, String>,
     onBack: () -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(0) }
+    val resultsDataStore = context.resultsDataStore
+    val resultsListLocal by resultsDataStore.data.collectAsState(initial = ResultsList.getDefaultInstance())
+    val results = resultsListLocal.resultsMap
     val participants = results.keys.toList()
+
     var showResultDialog by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
 
@@ -168,6 +180,36 @@ fun ResultsScreen(
                     )
                 }
 
+                // WhatsApp Button
+                Button(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.CenterHorizontally),
+                    onClick = {
+                        sendWhatsappMessage(
+                            context = context,
+                            numberPersonReceivingMsg = "",
+                            participants = participants,
+                            results = results,
+                            selectedIndex = selectedIndex,
+                        )
+                    }
+                ) {
+                    Text(
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        text = "Enviar via WhatsApp",
+                        fontSize = 22.sp,
+                        color = Color.White
+                    )
+                    Spacer(Modifier.size(4.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.whatsapp_icon),
+                        contentDescription = "Shuffle friends",
+                        modifier = Modifier
+                            .size(22.dp)
+                    )
+                }
+
 
                 if (showResultDialog && selectedIndex in participants.indices) {
                     RevelationDialog(
@@ -213,5 +255,34 @@ fun ResultsScreen(
                 }
             }
         }
+    }
+}
+
+fun sendWhatsappMessage(
+    context: Context,
+    numberPersonReceivingMsg: String,
+    participants: List<String>,
+    results: Map<String, String>,
+    selectedIndex: Int,
+) {
+    val whatsappNumber = "57311*******"
+    val whatsappMessage =
+        "Hola *${participants[selectedIndex]}*, \n Se te ha asignado un *AMIGO SECRETO* \n\n" +
+                "No compartas esta información con nadie o *vidas podrían correr peligro.* \n\n" +
+                "El nombre de tu amigo secreto es: \n\n" +
+                "*${results[participants[selectedIndex]]}*"
+
+    val whatsappIntent = Intent(Intent.ACTION_SEND)
+    whatsappIntent.setType("text/plain")
+    whatsappIntent.setPackage("com.whatsapp")
+    whatsappIntent.putExtra(Intent.EXTRA_TEXT, whatsappMessage)
+
+    whatsappIntent.putExtra("jid", "$whatsappNumber@s.whatsapp.net")
+
+    try {
+        context.startActivity(whatsappIntent)
+    } catch (error: ActivityNotFoundException) {
+        error.printStackTrace()
+        Toast.makeText(context, "¡¡¡NO TIENES WHATSAPP SUBNORMAL!!!", Toast.LENGTH_SHORT).show()
     }
 }

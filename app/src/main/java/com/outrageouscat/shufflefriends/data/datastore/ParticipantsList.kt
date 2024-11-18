@@ -1,4 +1,4 @@
-package com.outrageouscat.shufflefriends.data
+package com.outrageouscat.shufflefriends.data.datastore
 
 import kotlinx.serialization.Serializable
 

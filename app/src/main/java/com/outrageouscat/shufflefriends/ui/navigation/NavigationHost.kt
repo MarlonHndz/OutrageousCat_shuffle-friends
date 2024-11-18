@@ -5,15 +5,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.outrageouscat.shufflefriends.ui.HomeScreen
 import com.outrageouscat.shufflefriends.ui.ResultsScreen
-import kotlinx.serialization.json.Json
 
 @Composable
 fun NavigationHost(
@@ -34,21 +29,10 @@ fun NavigationHost(
             )
         }
 
-        composable(
-            route = Screen.Results.route,
-            arguments = listOf(
-                navArgument("results") {
-                    type = NavType.StringType
-                }
-            )
-        ) {  backStackEntry ->
-            val resultsJson = backStackEntry.arguments?.getString("results") ?: "{}"
-            val type = object : TypeToken<Map<String, String>>() {}.type
-            val results: Map<String, String> = Gson().fromJson(resultsJson, type)
-
+        composable(Screen.Results.route) {
             ResultsScreen(
+                context = context,
                 modifier = Modifier.fillMaxSize(),
-                results = results,
                 onBack = { navController.navigateUp() }
             )
         }

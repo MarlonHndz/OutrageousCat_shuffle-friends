@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+option java_package = "com.outrageouscat.shufflefriends.datastore";
+option java_outer_classname = "ResultsProto";
+
+message ResultsList {
+    map<string, string> results = 1;
+}

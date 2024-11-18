@@ -1,4 +1,4 @@
-package com.outrageouscat.shufflefriends.ui.Dialogs
+package com.outrageouscat.shufflefriends.ui.dialogs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,10 +14,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -25,14 +21,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
+
 @Composable
-fun AddParticipantDialog(
-    onAddParticipant: (String) -> Unit,
+fun EditParticipantDialog(
+    name: String,
+    onNameChange: (String) -> Unit,
+    onSave: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    var name by remember { mutableStateOf("") }
-
-    Dialog(onDismissRequest = { }) {
+    Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surface
@@ -41,31 +38,20 @@ fun AddParticipantDialog(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Agregar Participante", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text("Editar Participante", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(16.dp))
-                TextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text("Nombre") }
-                )
+                TextField(value = name, onValueChange = onNameChange, label = { Text("Nombre") })
                 Spacer(modifier = Modifier.height(16.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    Button(
-                        onClick = onDismiss
-                    ) {
+                    Button(onClick = onDismiss) {
                         Text("Cancelar")
                     }
                     Spacer(modifier = Modifier.width(16.dp))
-                    Button(
-                        onClick = {
-                            if (name.isNotEmpty()) onAddParticipant(name)
-                        },
-                        enabled = name.isNotEmpty()
-                    ) {
-                        Text("Agregar")
+                    Button(onClick = onSave) {
+                        Text("Guardar")
                     }
                 }
             }

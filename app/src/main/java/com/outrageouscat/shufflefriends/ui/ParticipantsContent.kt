@@ -35,14 +35,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.outrageouscat.shufflefriends.R
-import com.outrageouscat.shufflefriends.ui.Dialogs.AddParticipantDialog
-import com.outrageouscat.shufflefriends.ui.Dialogs.EditParticipantDialog
+import com.outrageouscat.shufflefriends.ui.dialogs.AddParticipantDialog
+import com.outrageouscat.shufflefriends.ui.dialogs.EditParticipantDialog
 import com.outrageouscat.shufflefriends.ui.composables.SwipeBox
 
 
@@ -60,6 +61,7 @@ fun ParticipantsContent(
     onShowAddDialog: () -> Unit,
     onDismissAddDialog: () -> Unit,
     onClearParticipants: () -> Unit,
+    onShuffleAgain: () -> Unit,
     isResultsEmpty: Boolean
 ) {
     var editParticipantDialog by remember { mutableStateOf(false) }
@@ -87,6 +89,20 @@ fun ParticipantsContent(
                             Icon(
                                 imageVector = Icons.Outlined.Delete,
                                 contentDescription = "Eliminar todos"
+                            )
+                        }
+                    }
+
+                    if (!isResultsEmpty){
+                        IconButton(
+                            onClick = onShuffleAgain
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.shuffle_default_icon),
+                                contentDescription = "Shuffle friends",
+                                modifier = Modifier
+                                    .size(22.dp),
+                                colorFilter = ColorFilter.tint(color = Color.Black)
                             )
                         }
                     }
@@ -221,7 +237,7 @@ fun ParticipantsContent(
                     )
                     Spacer(Modifier.size(4.dp))
                     Image(
-                        painter = painterResource(id = R.drawable.shuffle_default_icon),
+                        painter = painterResource(id = R.drawable.playing_cards_icon),
                         contentDescription = "Shuffle friends",
                         modifier = Modifier
                             .size(22.dp)

@@ -1,4 +1,4 @@
-package com.outrageouscat.shufflefriends.data
+package com.outrageouscat.shufflefriends.data.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore

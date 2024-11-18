@@ -9,6 +9,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,10 +17,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.google.gson.Gson
-import com.outrageouscat.shufflefriends.data.ParticipantsList
-import com.outrageouscat.shufflefriends.data.participantsListDataStore
-import com.outrageouscat.shufflefriends.ui.Dialogs.ClearParticipantsConfirmationDialog
+import com.outrageouscat.shufflefriends.data.datastore.ParticipantsList
+import com.outrageouscat.shufflefriends.data.datastore.participantsListDataStore
+import com.outrageouscat.shufflefriends.data.datastore.resultsDataStore
+import com.outrageouscat.shufflefriends.datastore.ResultsProto.ResultsList
+import com.outrageouscat.shufflefriends.ui.dialogs.ClearParticipantsConfirmationDialog
+import com.outrageouscat.shufflefriends.ui.dialogs.ShuffleAgainConfirmationDialog
+import com.outrageouscat.shufflefriends.ui.navigation.Screen
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -30,30 +34,50 @@ fun HomeScreen(
     modifier: Modifier,
     navController: NavHostController
 ) {
-    val dataStore = context.participantsListDataStore
+    val participantsListDataStore = context.participantsListDataStore
     val participantsState = remember { mutableStateOf<List<String>>(emptyList()) }
+
+    val resultsDataStore = context.resultsDataStore
+    val resultsListLocal by resultsDataStore.data.collectAsState(initial = ResultsList.getDefaultInstance())
+    var isLocalResultsEmpty = resultsListLocal.results.isEmpty()
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    var showShuffleConfirmationDialog by remember { mutableStateOf(false) }
+
     // Load participants from DataStore
     LaunchedEffect(Unit) {
-        dataStore.data.collect { participantsList ->
+        participantsListDataStore.data.collect { participantsList ->
             participantsState.value = participantsList.participants
         }
     }
 
     // Save changes to DataStore
     suspend fun saveParticipants(participants: List<String>) {
-        dataStore.updateData { ParticipantsList(participants) }
+        participantsListDataStore.updateData { ParticipantsList(participants) }
+        resultsDataStore.updateData { ResultsList.getDefaultInstance() }
     }
 
-    // Function to clear all participants
+    suspend fun saveResults(results: Map<String, String>) {
+        resultsDataStore.updateData { currentResults ->
+            currentResults.toBuilder().putAllResults(results).build()
+        }
+        isLocalResultsEmpty = results.isEmpty()
+    }
+
+    // Clear all participants
     var showClearConfirmationDialog by remember { mutableStateOf(false) }
     val onClearParticipants: () -> Unit = {
         participantsState.value = emptyList()  // Update local state to empty list
         scope.launch { saveParticipants(emptyList()) }  // Update DataStore with empty list
     }
+
+    // Clear results
+    val onClearResults: () -> Unit = {
+        scope.launch { resultsDataStore.updateData { ResultsList.getDefaultInstance() } }
+    }
+
 
     var participants by remember { participantsState }
     var showAddParticipantDialog by remember { mutableStateOf(false) }
@@ -92,30 +116,43 @@ fun HomeScreen(
                 scope.launch { saveParticipants(participants) }
             },
             onSeeResults = {
-                results?.let {
-                    val resultsJson = Gson().toJson(it)
-                    navController.navigate("Results/$resultsJson")
-                }
+                navController.navigate(Screen.Results.route)
             },
             onShuffle = {
                 results = shuffleParticipants(participants)
                 results?.let {
-                    val resultsJson = Gson().toJson(it)
-                    navController.navigate("Results/$resultsJson")
-
+                    scope.launch { saveResults(it) }
+                    navController.navigate(Screen.Results.route)
                 }
             },
             showAddParticipantDialog = showAddParticipantDialog,
             onShowAddDialog = { showAddParticipantDialog = true },
             onDismissAddDialog = { showAddParticipantDialog = false },
             onClearParticipants = { showClearConfirmationDialog = true },
-            isResultsEmpty = true
+            onShuffleAgain = { showShuffleConfirmationDialog = true },
+            isResultsEmpty = isLocalResultsEmpty
         )
 
         if (showClearConfirmationDialog) {
             ClearParticipantsConfirmationDialog(
-                onClearParticipants = onClearParticipants,
+                onClearParticipants = {
+                    onClearParticipants()
+                    onClearResults()
+                },
                 onDismiss = { showClearConfirmationDialog = false }
+            )
+        }
+
+        if (showShuffleConfirmationDialog) {
+            ShuffleAgainConfirmationDialog(
+                onShuffleAgain = {
+                    results = shuffleParticipants(participants)
+                    results?.let {
+                        scope.launch { saveResults(it) }
+                        navController.navigate(Screen.Results.route)
+                    }
+                },
+                onDismiss = { showShuffleConfirmationDialog = false }
             )
         }
     }

@@ -9,7 +9,7 @@ sealed class Screen(val route: String, val title: String) {
     )
 
     object Results : Screen (
-        route = "Results/{results}",
+        route = "Results",
         title = "Shuffle results"
     )
 }
