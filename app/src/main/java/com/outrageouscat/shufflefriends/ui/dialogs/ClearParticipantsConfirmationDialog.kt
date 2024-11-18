@@ -4,6 +4,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.outrageouscat.shufflefriends.R
 
 @Composable
 fun ClearParticipantsConfirmationDialog(
@@ -12,8 +14,8 @@ fun ClearParticipantsConfirmationDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("¿Borrar todos los participantes?") },
-        text = { Text("Al eliminar todos los participantes no podrás recuperarlos.") },
+        title = { Text(stringResource(R.string.clear_alert_title)) },
+        text = { Text(stringResource(R.string.clear_alert_message)) },
         confirmButton = {
             TextButton(
                 onClick = {
@@ -21,14 +23,14 @@ fun ClearParticipantsConfirmationDialog(
                     onDismiss()
                 }
             ) {
-                Text("Eliminar")
+                Text(stringResource(R.string.clear_alert_delete_button))
             }
         },
         dismissButton = {
             TextButton(
                 onClick = onDismiss
             ) {
-                Text("Cancelar")
+                Text(stringResource(R.string.clear_alert_cancel_button))
             }
         }
     )

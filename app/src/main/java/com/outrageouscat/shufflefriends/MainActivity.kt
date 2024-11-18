@@ -16,7 +16,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ShuffleFriendsTheme {
-
                 val navController = rememberNavController()
                 NavigationHost(
                     context = this@MainActivity,
@@ -24,7 +23,6 @@ class MainActivity : ComponentActivity() {
                     navController = navController
                 )
             }
-
         }
     }
 }

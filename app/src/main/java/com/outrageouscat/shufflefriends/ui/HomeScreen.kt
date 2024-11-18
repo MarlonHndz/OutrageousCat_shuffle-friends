@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.outrageouscat.shufflefriends.R
 import com.outrageouscat.shufflefriends.data.datastore.participantsListDataStore
 import com.outrageouscat.shufflefriends.data.datastore.resultsDataStore
 import com.outrageouscat.shufflefriends.data.models.Participant
@@ -104,7 +105,8 @@ fun HomeScreen(
             participants = participants,
             onAddParticipant = { name, phoneNumber, description ->
                 if (participants.any { it.name == name }) {
-                    errorMessage = "El participante '$name' ya existe."
+                    errorMessage =
+                        context.getString(R.string.error_message_participant_already_exist, name)
                     scope.launch { snackbarHostState.showSnackbar(errorMessage) }
                 } else {
                     participants = participants + Participant(name, phoneNumber, description)
@@ -114,7 +116,8 @@ fun HomeScreen(
             },
             onEditParticipant = { index, newName, newPhoneNumber, newDescription ->
                 if (participants.any { it.name == newName && it != participants[index] }) {
-                    errorMessage = "El participante '$newName' ya existe."
+                    errorMessage =
+                        context.getString(R.string.error_message_participant_already_exist, newName)
                     scope.launch { snackbarHostState.showSnackbar(errorMessage) }
                 } else {
                     participants = participants.toMutableList().apply {

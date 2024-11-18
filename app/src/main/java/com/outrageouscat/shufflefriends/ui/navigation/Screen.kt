@@ -1,15 +1,16 @@
 package com.outrageouscat.shufflefriends.ui.navigation
 
 import androidx.annotation.StringRes
+import com.outrageouscat.shufflefriends.R
 
-sealed class Screen(val route: String, val title: String) {
+sealed class Screen(val route: String,  @StringRes val title: Int) {
     object Home : Screen(
         route = "Home",
-        title = "Participants list"
+        title = R.string.screen_home
     )
 
-    object Results : Screen (
+    object Results : Screen(
         route = "Results",
-        title = "Shuffle results"
+        title = R.string.screen_results
     )
 }

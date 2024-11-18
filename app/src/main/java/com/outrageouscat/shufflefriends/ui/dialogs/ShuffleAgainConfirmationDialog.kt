@@ -4,6 +4,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.outrageouscat.shufflefriends.R
 
 @Composable
 fun ShuffleAgainConfirmationDialog(
@@ -12,8 +14,8 @@ fun ShuffleAgainConfirmationDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("¿Volver a sortear amigos secretos?") },
-        text = { Text("Al sortear nuevamente perderas los resultados del sorteo anterior.") },
+        title = { Text(stringResource(R.string.shuffle_again_alert_title)) },
+        text = { Text(stringResource(R.string.shuffle_again_alert_message)) },
         confirmButton = {
             TextButton(
                 onClick = {
@@ -21,14 +23,14 @@ fun ShuffleAgainConfirmationDialog(
                     onDismiss()
                 }
             ) {
-                Text("Sortear")
+                Text(stringResource(R.string.shuffle_again_alert_shuffle_button))
             }
         },
         dismissButton = {
             TextButton(
                 onClick = onDismiss
             ) {
-                Text("Cancelar")
+                Text(stringResource(R.string.shuffle_again_alert_cancel_button))
             }
         }
     )

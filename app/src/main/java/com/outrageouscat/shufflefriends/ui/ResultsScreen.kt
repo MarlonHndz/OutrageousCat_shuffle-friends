@@ -4,11 +4,6 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +21,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -49,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -118,7 +113,7 @@ fun ResultsScreen(
                 title = {
                     Image(
                         painter = painterResource(id = R.drawable.shuffle_friends_gift_icon),
-                        contentDescription = "Shuffle friends",
+                        contentDescription = stringResource(R.string.content_description_app_logo),
                         modifier = Modifier.size(40.dp),
                         contentScale = ContentScale.FillBounds
                     )
@@ -129,7 +124,7 @@ fun ResultsScreen(
                     ) {
                         Icon(
                             imageVector = androidx.compose.material.icons.Icons.Default.ArrowBack,
-                            contentDescription = "Volver"
+                            contentDescription = stringResource(R.string.content_description_back_icon)
                         )
                     }
                 }
@@ -145,7 +140,7 @@ fun ResultsScreen(
             ) {
                 Text(
                     modifier = Modifier.padding(8.dp),
-                    text = "Resultados",
+                    text = stringResource(R.string.results_screen_title),
                     fontSize = 32.sp,
                     fontWeight = FontWeight.W300
                 )
@@ -204,14 +199,14 @@ fun ResultsScreen(
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 4.dp),
-                        text = "Revelar amigo secreto",
+                        text = stringResource(R.string.results_reveal_secret_button),
                         fontSize = 22.sp,
                         color = Color.White
                     )
                     Spacer(Modifier.size(4.dp))
                     Image(
                         painter = painterResource(id = R.drawable.gift_box_open_icon),
-                        contentDescription = "Shuffle friends",
+                        contentDescription = stringResource(R.string.content_description_gift_icon),
                         modifier = Modifier
                             .size(22.dp)
                     )
@@ -234,14 +229,14 @@ fun ResultsScreen(
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 4.dp),
-                        text = "Enviar via WhatsApp",
+                        text = stringResource(R.string.results_send_via_whatsapp_button),
                         fontSize = 22.sp,
                         color = Color.White
                     )
                     Spacer(Modifier.size(4.dp))
                     Image(
                         painter = painterResource(id = R.drawable.whatsapp_icon),
-                        contentDescription = "Shuffle friends",
+                        contentDescription = stringResource(R.string.content_description_whatsapp_icon),
                         modifier = Modifier
                             .size(22.dp)
                     )
@@ -250,7 +245,7 @@ fun ResultsScreen(
                     modifier = Modifier
                         .padding(horizontal = 32.dp, vertical = 8.dp)
                         .align(Alignment.CenterHorizontally),
-                    text = "*Recuerda que al ser el host y enviar el mensaje de WhatsApp tendrás acceso a información confidencial 😎.",
+                    text = stringResource(R.string.results_top_secret_alert_message),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.W300,
                     fontStyle = FontStyle.Italic,
@@ -284,7 +279,7 @@ fun ResultsScreen(
                     },
                     enabled = selectedIndex > 0
                 ) {
-                    Text("Anterior")
+                    Text(stringResource(R.string.results_previous_button))
                 }
 
                 // Next Button
@@ -297,7 +292,7 @@ fun ResultsScreen(
                     },
                     enabled = selectedIndex < participants.size - 1
                 ) {
-                    Text("Siguiente")
+                    Text(stringResource(R.string.results_next_button))
                 }
             }
         }

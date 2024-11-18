@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -79,7 +80,7 @@ fun ParticipantsContent(
                 title = {
                     Image(
                         painter = painterResource(id = R.drawable.shuffle_friends_gift_icon),
-                        contentDescription = "Shuffle friends",
+                        contentDescription = stringResource(R.string.content_description_app_logo),
                         modifier = Modifier.size(40.dp),
                         contentScale = ContentScale.FillBounds
                     )
@@ -91,7 +92,7 @@ fun ParticipantsContent(
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.Delete,
-                                contentDescription = "Eliminar todos"
+                                contentDescription = stringResource(R.string.content_description_delete_icon_button)
                             )
                         }
                     }
@@ -102,7 +103,7 @@ fun ParticipantsContent(
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.shuffle_default_icon),
-                                contentDescription = "Shuffle friends",
+                                contentDescription = stringResource(R.string.content_description_shuffle_icon_button),
                                 modifier = Modifier
                                     .size(22.dp),
                                 colorFilter = ColorFilter.tint(color = Color.Black)
@@ -120,7 +121,7 @@ fun ParticipantsContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Editar"
+                    contentDescription = stringResource(R.string.content_description_add_participant_floating_button)
                 )
             }
         }
@@ -137,7 +138,10 @@ fun ParticipantsContent(
             ) {
                 Text(
                     modifier = Modifier.padding(8.dp),
-                    text = "Participantes (${participants.size})",
+                    text = stringResource(
+                        R.string.home_screen_title,
+                        participants.size
+                    ),
                     fontSize = 32.sp,
                     fontWeight = FontWeight.W300,
                 )
@@ -188,7 +192,7 @@ fun ParticipantsContent(
                                         fontWeight = FontWeight.W300,
                                         maxLines = 2,
                                         overflow = TextOverflow.Ellipsis,
-                                        fontStyle= FontStyle.Italic
+                                        fontStyle = FontStyle.Italic
 
                                     )
                                 }
@@ -205,7 +209,7 @@ fun ParticipantsContent(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Outlined.Edit,
-                                            contentDescription = "Editar"
+                                            contentDescription = stringResource(R.string.content_description_edit_button)
                                         )
                                     }
 //                                    IconButton(onClick = { onRemoveParticipant(index) }) {
@@ -236,19 +240,20 @@ fun ParticipantsContent(
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 4.dp),
-                        text = "Shuffle",
+                        text = stringResource(R.string.home_shuffle_button),
                         fontSize = 22.sp,
                         color = Color.White
                     )
                     Spacer(Modifier.size(4.dp))
                     Image(
                         painter = painterResource(id = R.drawable.shuffle_default_icon),
-                        contentDescription = "Shuffle friends",
+                        contentDescription = stringResource(R.string.content_description_shuffle_icon),
                         modifier = Modifier
                             .size(22.dp)
                     )
                 }
             } else {
+                // See Results Button
                 Button(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -258,14 +263,14 @@ fun ParticipantsContent(
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 4.dp),
-                        text = "Ver resultados",
+                        text = stringResource(R.string.home_see_results_button),
                         fontSize = 22.sp,
                         color = Color.White
                     )
                     Spacer(Modifier.size(4.dp))
                     Image(
                         painter = painterResource(id = R.drawable.playing_cards_icon),
-                        contentDescription = "Shuffle friends",
+                        contentDescription = stringResource(R.string.content_description_results_icon),
                         modifier = Modifier
                             .size(22.dp)
                     )
@@ -274,7 +279,7 @@ fun ParticipantsContent(
 
             if (showAddParticipantDialog) {
                 AddOrEditParticipantDialog(
-                    alertTitle = "Agregar Participante",
+                    alertTitle = stringResource(R.string.add_edit_alert_title_add_participant),
                     onConfirm = { name, phone, description ->
                         onAddParticipant(name, phone, description)
                         onDismissAddDialog()
@@ -285,7 +290,7 @@ fun ParticipantsContent(
 
             if (editParticipantDialog) {
                 AddOrEditParticipantDialog(
-                    alertTitle = "Editar Participante",
+                    alertTitle = stringResource(R.string.add_edit_alert_title_edit_participant),
                     initialName = editingParticipant.name,
                     initialPhone = editingParticipant.phoneNumber,
                     initialDescription = editingParticipant.description,

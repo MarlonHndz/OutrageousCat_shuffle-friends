@@ -21,12 +21,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.outrageouscat.shufflefriends.R
 
 @Composable
 fun AddOrEditParticipantDialog(
@@ -60,7 +62,7 @@ fun AddOrEditParticipantDialog(
                     modifier = Modifier.padding(bottom = 16.dp),
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Nombre") },
+                    label = { Text(stringResource(R.string.add_edit_alert_label_name)) },
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words
                     ),
@@ -69,7 +71,7 @@ fun AddOrEditParticipantDialog(
                     modifier = Modifier.padding(bottom = 16.dp),
                     value = phone,
                     onValueChange = { phone = it },
-                    label = { Text("Télefono") },
+                    label = { Text(stringResource(R.string.add_edit_alert_label_phone_number)) },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number
                     ),
@@ -78,7 +80,7 @@ fun AddOrEditParticipantDialog(
                     modifier = Modifier.padding(bottom = 8.dp),
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Descripción/Gustos") },
+                    label = { Text(stringResource(R.string.add_edit_alert_label_description)) },
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Sentences
                     ),
@@ -92,7 +94,7 @@ fun AddOrEditParticipantDialog(
                     Button(
                         onClick = onDismiss
                     ) {
-                        Text("Cancelar")
+                        Text(stringResource(R.string.add_edit_alert_cancel_button))
                     }
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
@@ -101,7 +103,7 @@ fun AddOrEditParticipantDialog(
                         },
                         enabled = name.isNotEmpty()
                     ) {
-                        Text("Aceptar")
+                        Text(stringResource(R.string.add_edit_alert_acept_button))
                     }
                 }
             }
