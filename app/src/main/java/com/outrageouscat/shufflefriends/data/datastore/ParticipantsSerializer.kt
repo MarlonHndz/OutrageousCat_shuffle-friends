@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
 import androidx.datastore.dataStore
+import com.outrageouscat.shufflefriends.data.models.ParticipantsList
 import kotlinx.serialization.json.Json
 import java.io.InputStream
 import java.io.OutputStream

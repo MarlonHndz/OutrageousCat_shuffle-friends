@@ -15,14 +15,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.outrageouscat.shufflefriends.data.models.Participant
 
 @Composable
 fun RevelationDialog(
-    participants: List<String>,
-    results: Map<String, String>,
+    participants: List<Participant>,
+    results: Map<String, Participant>,
     selectedIndex: Int,
     onDismiss: () -> Unit
 ) {
+    val giverName = participants[selectedIndex].name
+    val receiverName = results[giverName]?.name.toString()
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = MaterialTheme.shapes.medium,
@@ -41,12 +44,12 @@ fun RevelationDialog(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     modifier = Modifier.padding(vertical = 8.dp),
-                    text = "De: ${participants[selectedIndex]}",
+                    text = "De: $giverName",
                     fontSize = 20.sp,
                 )
                 Text(
                     modifier = Modifier.padding(vertical = 0.dp),
-                    text = "Es: ${results[participants[selectedIndex]]}",
+                    text = "Es: $receiverName",
                     fontSize = 20.sp,
                 )
                 Spacer(modifier = Modifier.height(16.dp))

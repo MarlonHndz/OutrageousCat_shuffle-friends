@@ -46,7 +46,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.outrageouscat.shufflefriends.R
+import com.outrageouscat.shufflefriends.data.datastore.participantsListDataStore
 import com.outrageouscat.shufflefriends.data.datastore.resultsDataStore
+import com.outrageouscat.shufflefriends.data.models.Participant
+import com.outrageouscat.shufflefriends.data.models.ParticipantsList
 import com.outrageouscat.shufflefriends.datastore.ResultsProto.ResultsList
 import com.outrageouscat.shufflefriends.ui.dialogs.RevelationDialog
 import kotlinx.coroutines.launch
@@ -61,10 +64,29 @@ fun ResultsScreen(
     onBack: () -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(0) }
+
+    val participantsListDataStore = context.participantsListDataStore
+    val participantsListLocal by participantsListDataStore.data.collectAsState(
+        initial = ParticipantsList(
+            emptyList()
+        )
+    )
+    val participants = participantsListLocal.participants
+
     val resultsDataStore = context.resultsDataStore
     val resultsListLocal by resultsDataStore.data.collectAsState(initial = ResultsList.getDefaultInstance())
+
+    // Convert resultsMap to format Map<String, Participant>
     val results = resultsListLocal.resultsMap
-    val participants = results.keys.toList()
+        .map { (key, value) ->
+            val giver = key.toString()
+            val receiver = Participant(
+                name = value.name,
+                phoneNumber = value.phoneNumber,
+                description = value.description
+            )
+            giver to receiver
+        }.toMap()
 
     var showResultDialog by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
@@ -147,7 +169,7 @@ fun ResultsScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = participant,
+                                    text = participant.name,
                                     textAlign = TextAlign.Center,
                                     fontSize = 30.sp,
                                     fontWeight = FontWeight.W400,
@@ -188,7 +210,6 @@ fun ResultsScreen(
                     onClick = {
                         sendWhatsappMessage(
                             context = context,
-                            numberPersonReceivingMsg = "",
                             participants = participants,
                             results = results,
                             selectedIndex = selectedIndex,
@@ -260,24 +281,28 @@ fun ResultsScreen(
 
 fun sendWhatsappMessage(
     context: Context,
-    numberPersonReceivingMsg: String,
-    participants: List<String>,
-    results: Map<String, String>,
+    participants: List<Participant>,
+    results: Map<String, Participant>,
     selectedIndex: Int,
 ) {
-    val whatsappNumber = "57311*******"
+    val giverName = participants[selectedIndex].name
+    val giverPhone = "57" + participants[selectedIndex].phoneNumber
+
+    val receiverName = results[giverName]?.name.toString()
+    val receiverDescription = results[giverName]?.description.toString()
+
     val whatsappMessage =
-        "Hola *${participants[selectedIndex]}*, \n Se te ha asignado un *AMIGO SECRETO* \n\n" +
+        "Hola *$giverName*, \n Se te ha asignado un *AMIGO SECRETO* \n\n" +
                 "No compartas esta información con nadie o *vidas podrían correr peligro.* \n\n" +
                 "El nombre de tu amigo secreto es: \n\n" +
-                "*${results[participants[selectedIndex]]}*"
+                "*$receiverName"
 
     val whatsappIntent = Intent(Intent.ACTION_SEND)
     whatsappIntent.setType("text/plain")
     whatsappIntent.setPackage("com.whatsapp")
     whatsappIntent.putExtra(Intent.EXTRA_TEXT, whatsappMessage)
 
-    whatsappIntent.putExtra("jid", "$whatsappNumber@s.whatsapp.net")
+    whatsappIntent.putExtra("jid", "$giverPhone@s.whatsapp.net")
 
     try {
         context.startActivity(whatsappIntent)

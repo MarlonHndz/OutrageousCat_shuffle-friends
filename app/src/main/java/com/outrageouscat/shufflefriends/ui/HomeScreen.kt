@@ -17,9 +17,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.outrageouscat.shufflefriends.data.datastore.ParticipantsList
 import com.outrageouscat.shufflefriends.data.datastore.participantsListDataStore
 import com.outrageouscat.shufflefriends.data.datastore.resultsDataStore
+import com.outrageouscat.shufflefriends.data.models.Participant
+import com.outrageouscat.shufflefriends.data.models.ParticipantsList
+import com.outrageouscat.shufflefriends.datastore.ResultsProto
+import com.outrageouscat.shufflefriends.datastore.ResultsProto.ParticipantLocal
 import com.outrageouscat.shufflefriends.datastore.ResultsProto.ResultsList
 import com.outrageouscat.shufflefriends.ui.dialogs.ClearParticipantsConfirmationDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.ShuffleAgainConfirmationDialog
@@ -35,7 +38,8 @@ fun HomeScreen(
     navController: NavHostController
 ) {
     val participantsListDataStore = context.participantsListDataStore
-    val participantsState = remember { mutableStateOf<List<String>>(emptyList()) }
+    val participantsState = remember { mutableStateOf<List<Participant>>(emptyList()) }
+    var participants by remember { participantsState }
 
     val resultsDataStore = context.resultsDataStore
     val resultsListLocal by resultsDataStore.data.collectAsState(initial = ResultsList.getDefaultInstance())
@@ -54,14 +58,23 @@ fun HomeScreen(
     }
 
     // Save changes to DataStore
-    suspend fun saveParticipants(participants: List<String>) {
+    suspend fun saveParticipants(participants: List<Participant>) {
         participantsListDataStore.updateData { ParticipantsList(participants) }
         resultsDataStore.updateData { ResultsList.getDefaultInstance() }
     }
 
-    suspend fun saveResults(results: Map<String, String>) {
+    suspend fun saveResults(results: Map<Participant, Participant>) {
         resultsDataStore.updateData { currentResults ->
-            currentResults.toBuilder().putAllResults(results).build()
+            val updatedResults = results.mapKeys { it.key.name }
+                .mapValues { entry ->
+                    val participantBuilder = ParticipantLocal.newBuilder()
+                    participantBuilder.name = entry.value.name
+                    participantBuilder.phoneNumber = entry.value.phoneNumber
+                    participantBuilder.description = entry.value.description
+                    participantBuilder.build()
+                }
+
+            currentResults.toBuilder().putAllResults(updatedResults).build()
         }
         isLocalResultsEmpty = results.isEmpty()
     }
@@ -78,10 +91,8 @@ fun HomeScreen(
         scope.launch { resultsDataStore.updateData { ResultsList.getDefaultInstance() } }
     }
 
-
-    var participants by remember { participantsState }
     var showAddParticipantDialog by remember { mutableStateOf(false) }
-    var results by remember { mutableStateOf<Map<String, String>?>(null) }
+    var results by remember { mutableStateOf<Map<Participant, Participant>?>(null) }
     var errorMessage by remember { mutableStateOf<String>("") }
 
     Scaffold(
@@ -92,22 +103,24 @@ fun HomeScreen(
         ParticipantsContent(
             modifier = Modifier.fillMaxSize(),
             participants = participants,
-            onAddParticipant = { name ->
-                if (participants.contains(name)) {
+            onAddParticipant = { name, phoneNumber, description ->
+                if (participants.any { it.name == name }) {
                     errorMessage = "El participante '$name' ya existe."
                     scope.launch { snackbarHostState.showSnackbar(errorMessage) }
                 } else {
-                    participants = participants + name
+                    participants = participants + Participant(name, phoneNumber, description)
                     scope.launch { saveParticipants(participants) }
                     errorMessage = ""
                 }
             },
-            onEditParticipant = { index, newName ->
-                if (participants.contains(newName)) {
+            onEditParticipant = { index, newName, newPhoneNumber, newDescription ->
+                if (participants.any { it.name == newName && it != participants[index] }) {
                     errorMessage = "El participante '$newName' ya existe."
                     scope.launch { snackbarHostState.showSnackbar(errorMessage) }
                 } else {
-                    participants = participants.toMutableList().apply { this[index] = newName }
+                    participants = participants.toMutableList().apply {
+                        this[index] = Participant(newName, newPhoneNumber, newDescription)
+                    }
                     scope.launch { saveParticipants(participants) }
                 }
             },
@@ -158,12 +171,12 @@ fun HomeScreen(
     }
 }
 
-fun shuffleParticipants(participants: List<String>): Map<String, String> {
+fun shuffleParticipants(participants: List<Participant>): Map<Participant, Participant> {
     if (participants.size < 2) {
         return emptyMap()
     }
 
-    var shuffledParticipants: List<String>
+    var shuffledParticipants: List<Participant>
     do {
         shuffledParticipants = participants.shuffled()
     } while (participants.indices.any { participants[it] == shuffledParticipants[it] })

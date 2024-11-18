@@ -3,6 +3,12 @@ syntax = "proto3";
 option java_package = "com.outrageouscat.shufflefriends.datastore";
 option java_outer_classname = "ResultsProto";
 
+message ParticipantLocal {
+    string name = 1;
+    string phone_number = 2;
+    string description = 3;
+}
+
 message ResultsList {
-    map<string, string> results = 1;
+    map<string, ParticipantLocal> results = 1;
 }

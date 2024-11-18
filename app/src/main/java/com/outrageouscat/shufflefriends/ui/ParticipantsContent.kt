@@ -20,6 +20,7 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,23 +38,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.outrageouscat.shufflefriends.R
-import com.outrageouscat.shufflefriends.ui.dialogs.AddParticipantDialog
-import com.outrageouscat.shufflefriends.ui.dialogs.EditParticipantDialog
+import com.outrageouscat.shufflefriends.data.models.Participant
 import com.outrageouscat.shufflefriends.ui.composables.SwipeBox
-
+import com.outrageouscat.shufflefriends.ui.dialogs.AddOrEditParticipantDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ParticipantsContent(
     modifier: Modifier,
-    participants: List<String>,
-    onAddParticipant: (String) -> Unit,
-    onEditParticipant: (Int, String) -> Unit,
+    participants: List<Participant>,
+    onAddParticipant: (String, String, String) -> Unit,
+    onEditParticipant: (Int, String, String, String) -> Unit,
     onRemoveParticipant: (Int) -> Unit,
     onShuffle: () -> Unit,
     onSeeResults: () -> Unit,
@@ -65,6 +66,7 @@ fun ParticipantsContent(
     isResultsEmpty: Boolean
 ) {
     var editParticipantDialog by remember { mutableStateOf(false) }
+    var editingParticipant by remember { mutableStateOf(Participant("", "", "")) }
     var editingName by remember { mutableStateOf("") }
     var editingIndex by remember { mutableIntStateOf(-1) }
 
@@ -93,7 +95,7 @@ fun ParticipantsContent(
                         }
                     }
 
-                    if (!isResultsEmpty){
+                    if (!isResultsEmpty) {
                         IconButton(
                             onClick = onShuffleAgain
                         ) {
@@ -148,7 +150,7 @@ fun ParticipantsContent(
                                 onRemoveParticipant(index)
                             },
                             onEdit = {
-                                editingName = participant
+                                editingParticipant = participant
                                 editingIndex = index
                                 editParticipantDialog = true
                             },
@@ -159,21 +161,43 @@ fun ParticipantsContent(
                                     .fillMaxWidth()
                                     .background(MaterialTheme.colorScheme.surface),
                             ) {
-                                Text(
+                                Column(
                                     modifier = Modifier
                                         .weight(1f)
-                                        .padding(horizontal = 8.dp, vertical = 12.dp)
-                                        .align(Alignment.CenterVertically),
-                                    text = participant,
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.W400,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                                Row {
+                                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                                ) {
+                                    Text(
+                                        text = participant.name,
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.W500,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                    Text(
+                                        text = participant.phoneNumber,
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.W400,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        color = Color.DarkGray
+                                    )
+                                    Text(
+                                        text = participant.description,
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.W300,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Ellipsis,
+                                        fontStyle= FontStyle.Italic
+
+                                    )
+                                }
+
+                                Row(
+                                    modifier = Modifier.align(Alignment.CenterVertically)
+                                ) {
                                     IconButton(
                                         onClick = {
-                                            editingName = participant
+                                            editingParticipant = participant
                                             editingIndex = index
                                             editParticipantDialog = true
                                         }
@@ -192,8 +216,10 @@ fun ParticipantsContent(
                                 }
                             }
                         }
-
-
+                        HorizontalDivider(
+                            modifier = Modifier.padding(horizontal = 6.dp),
+                            thickness = 1.dp
+                        )
                     }
                 }
             }
@@ -246,9 +272,10 @@ fun ParticipantsContent(
             }
 
             if (showAddParticipantDialog) {
-                AddParticipantDialog(
-                    onAddParticipant = { name ->
-                        onAddParticipant(name)
+                AddOrEditParticipantDialog(
+                    alertTitle = "Agregar Participante",
+                    onConfirm = { name, phone, description ->
+                        onAddParticipant(name, phone, description)
                         onDismissAddDialog()
                     },
                     onDismiss = onDismissAddDialog,
@@ -256,11 +283,18 @@ fun ParticipantsContent(
             }
 
             if (editParticipantDialog) {
-                EditParticipantDialog(
-                    name = editingName,
-                    onNameChange = { editingName = it },
-                    onSave = {
-                        onEditParticipant(editingIndex, editingName)
+                AddOrEditParticipantDialog(
+                    alertTitle = "Editar Participante",
+                    initialName = editingParticipant.name,
+                    initialPhone = editingParticipant.phoneNumber,
+                    initialDescription = editingParticipant.description,
+                    onConfirm = { newName, newPhoneNumber, newDescription ->
+                        onEditParticipant(
+                            editingIndex,
+                            newName,
+                            newPhoneNumber,
+                            newDescription,
+                        )
                         editParticipantDialog = false
                     },
                     onDismiss = { editParticipantDialog = false }
