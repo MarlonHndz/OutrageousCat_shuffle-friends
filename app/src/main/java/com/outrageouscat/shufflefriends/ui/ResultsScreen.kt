@@ -4,6 +4,11 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +25,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -41,8 +48,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.outrageouscat.shufflefriends.R
@@ -126,11 +135,12 @@ fun ResultsScreen(
             )
         }
     ) { innerPadding ->
-        Box {
+        Box(
+            modifier = Modifier.padding(innerPadding)
+        ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+                    .fillMaxSize(),
             ) {
                 Text(
                     modifier = Modifier.padding(8.dp),
@@ -156,9 +166,10 @@ fun ResultsScreen(
                             Random.nextInt(100, 255)
                         )
                         ElevatedCard(
+                            elevation = CardDefaults.elevatedCardElevation(16.dp),
                             modifier = Modifier
                                 .fillParentMaxWidth()
-                                .height(250.dp)
+                                .height(180.dp)
                                 .padding(horizontal = 32.dp),
 
                             ) {
@@ -171,8 +182,10 @@ fun ResultsScreen(
                                 Text(
                                     text = participant.name,
                                     textAlign = TextAlign.Center,
-                                    fontSize = 30.sp,
-                                    fontWeight = FontWeight.W400,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    fontSize = 35.sp,
+                                    fontWeight = FontWeight.W300,
                                     color = Color.White
                                 )
                             }
@@ -184,6 +197,7 @@ fun ResultsScreen(
                 Button(
                     modifier = Modifier
                         .padding(16.dp)
+                        .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
                     onClick = { showResultDialog = true }
                 ) {
@@ -206,6 +220,7 @@ fun ResultsScreen(
                 Button(
                     modifier = Modifier
                         .padding(16.dp)
+                        .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
                     onClick = {
                         sendWhatsappMessage(
@@ -230,7 +245,16 @@ fun ResultsScreen(
                             .size(22.dp)
                     )
                 }
-
+                Text(
+                    modifier = Modifier
+                        .padding(horizontal = 32.dp, vertical = 8.dp)
+                        .align(Alignment.CenterHorizontally),
+                    text = "*Recuerda que al ser el host y enviar el mensaje de WhatsApp tendrás acceso a información confidencial 😎.",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.W300,
+                    fontStyle = FontStyle.Italic,
+                    color = Color.DarkGray
+                )
 
                 if (showResultDialog && selectedIndex in participants.indices) {
                     RevelationDialog(
@@ -292,10 +316,14 @@ fun sendWhatsappMessage(
     val receiverDescription = results[giverName]?.description.toString()
 
     val whatsappMessage =
-        "Hola *$giverName*, \n Se te ha asignado un *AMIGO SECRETO* \n\n" +
-                "No compartas esta información con nadie o *vidas podrían correr peligro.* \n\n" +
-                "El nombre de tu amigo secreto es: \n\n" +
-                "*$receiverName"
+        "¡Hola *$giverName*!\n" +
+                "Se te ha asignado un 🤫 *AMIGO SECRETO* 🤫\n\n" +
+                "No compartas esta información con nadie o 😒🔪 *vidas podrían correr peligro 🔪🩸.*\n\n" +
+                "🥁 El nombre de tu amigo secreto es: 🥁\n\n" +
+                "🌟⭐ *$receiverName* ⭐🌟\n\n" +
+                "Quien dijo respecto a sus gustos: \n\n" +
+                "*$receiverDescription*\n\n" +
+                "Recuerda que la entrega de regalos 🎁 se realizará el *24 de Diciembre a la media noche* 🎁"
 
     val whatsappIntent = Intent(Intent.ACTION_SEND)
     whatsappIntent.setType("text/plain")
