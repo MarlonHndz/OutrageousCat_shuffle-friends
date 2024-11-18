@@ -2,51 +2,51 @@
     <string name="app_name">Shuffle Friends</string>
 
     <string name="screen_home">Participants list</string>
-    <string name="screen_results">Shuffle results</string>
+    <string name="screen_results">Results</string>
 
     <string name="content_description_app_logo">Shuffle friends</string>
-    <string name="content_description_delete_icon_button">Eliminar todos</string>
+    <string name="content_description_delete_icon_button">Delete all</string>
     <string name="content_description_shuffle_icon_button">Shuffle friends again</string>
-    <string name="content_description_add_participant_floating_button">Agregar participante</string>
+    <string name="content_description_add_participant_floating_button">Add participants</string>
     <string name="content_description_edit_button">Edit button</string>
     <string name="content_description_shuffle_icon">Shuffle icon</string>
     <string name="content_description_results_icon">Results icon</string>
     <string name="content_description_back_icon">Back icon</string>
     <string name="content_description_gift_icon">gift icon</string>
-    <string name="content_description_whatsapp_icon">whatsapp icon</string>
+    <string name="content_description_whatsapp_icon">WhatsApp icon</string>
 
-    <string name="error_message_participant_already_exist">El participante \'%1$s\' ya existe.</string>
+    <string name="error_message_participant_already_exist">The participant \'%1$s\' already exists.</string>
 
-    <string name="home_screen_title">Participantes (%1$s)</string>
+    <string name="home_screen_title">Participants (%1$s)</string>
     <string name="home_shuffle_button">Shuffle</string>
-    <string name="home_see_results_button">Ver resultados</string>
+    <string name="home_see_results_button">See results</string>
 
-    <string name="results_screen_title">Resultados</string>
-    <string name="results_reveal_secret_button">Revelar amigo secreto</string>
-    <string name="results_send_via_whatsapp_button">Enviar via WhatsApp</string>
-    <string name="results_top_secret_alert_message">*Recuerda que al ser el host y enviar el mensaje de WhatsApp tendrás acceso a información confidencial 😎.</string>
-    <string name="results_previous_button">Anterior</string>
-    <string name="results_next_button">Siguiente</string>
+    <string name="results_screen_title">Results</string>
+    <string name="results_reveal_secret_button">Reveal secret friend</string>
+    <string name="results_send_via_whatsapp_button">Send via WhatsApp</string>
+    <string name="results_top_secret_alert_message">*Remember that by being the host and sending the WhatsApp message you will have access to confidential information 😎.</string>
+    <string name="results_previous_button">Previous</string>
+    <string name="results_next_button">Next</string>
 
-    <string name="add_edit_alert_title_add_participant">Agregar Participante</string>
-    <string name="add_edit_alert_title_edit_participant">Editar Participante</string>
-    <string name="add_edit_alert_label_name">Nombre</string>
-    <string name="add_edit_alert_label_phone_number">Télefono</string>
-    <string name="add_edit_alert_label_description">Descripción/Gustos</string>
-    <string name="add_edit_alert_cancel_button">Cancelar</string>
-    <string name="add_edit_alert_acept_button">Aceptar</string>
+    <string name="add_edit_alert_title_add_participant">Add Participant</string>
+    <string name="add_edit_alert_title_edit_participant">Edit Participant</string>
+    <string name="add_edit_alert_label_name">Name</string>
+    <string name="add_edit_alert_label_phone_number">Phone number</string>
+    <string name="add_edit_alert_label_description">Description/Tastes</string>
+    <string name="add_edit_alert_cancel_button">Cancel</string>
+    <string name="add_edit_alert_acept_button">Accept</string>
 
-    <string name="clear_alert_title">¿Borrar todos los participantes?</string>
-    <string name="clear_alert_message">Al eliminar todos los participantes no podrás recuperarlos.</string>
-    <string name="clear_alert_delete_button">Eliminar</string>
-    <string name="clear_alert_cancel_button">Cancelar</string>
+    <string name="clear_alert_title">Delete all participants?</string>
+    <string name="clear_alert_message">By deleting all participants you will not be able to recover them.</string>
+    <string name="clear_alert_delete_button">Delete</string>
+    <string name="clear_alert_cancel_button">Cancel</string>
 
-    <string name="reveal_alert_subtitle">Tu amigo secreto es:</string>
-    <string name="reveal_alert_who_said_message">Quien dijo:</string>
+    <string name="reveal_alert_subtitle">Your secret friend is:</string>
+    <string name="reveal_alert_who_said_message">Who said:</string>
 
-    <string name="shuffle_again_alert_message">Al sortear nuevamente perderas los resultados del sorteo anterior.</string>
-    <string name="shuffle_again_alert_title">¿Volver a sortear amigos secretos?</string>
-    <string name="shuffle_again_alert_shuffle_button">Sortear</string>
-    <string name="shuffle_again_alert_cancel_button">Cancelar</string>
+    <string name="shuffle_again_alert_title">Do you want to shuffle  secret friends again?</string>
+    <string name="shuffle_again_alert_message">When you shuffle again you will lose the previous results.</string>
+    <string name="shuffle_again_alert_shuffle_button">Shuffle</string>
+    <string name="shuffle_again_alert_cancel_button">Cancel</string>
 
 </resources>
