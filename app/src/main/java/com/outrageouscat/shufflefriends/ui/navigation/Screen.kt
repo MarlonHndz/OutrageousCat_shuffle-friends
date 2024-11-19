@@ -13,4 +13,9 @@ sealed class Screen(val route: String,  @StringRes val title: Int) {
         route = "Results",
         title = R.string.screen_results
     )
+
+    object Settings : Screen (
+        route = "Settings",
+        title = R.string.screen_settings
+    )
 }

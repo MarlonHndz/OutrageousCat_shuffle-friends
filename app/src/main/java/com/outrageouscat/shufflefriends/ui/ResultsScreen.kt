@@ -72,9 +72,7 @@ fun ResultsScreen(
 
     val participantsListDataStore = context.participantsListDataStore
     val participantsListLocal by participantsListDataStore.data.collectAsState(
-        initial = ParticipantsList(
-            emptyList()
-        )
+        initial = ParticipantsList(emptyList())
     )
     val participants = participantsListLocal.participants
 

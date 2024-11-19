@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.outrageouscat.shufflefriends.ui.HomeScreen
 import com.outrageouscat.shufflefriends.ui.ResultsScreen
+import com.outrageouscat.shufflefriends.ui.SettingsScreen
 
 @Composable
 fun NavigationHost(
@@ -31,6 +32,14 @@ fun NavigationHost(
 
         composable(Screen.Results.route) {
             ResultsScreen(
+                context = context,
+                modifier = Modifier.fillMaxSize(),
+                onBack = { navController.navigateUp() }
+            )
+        }
+
+        composable(Screen.Settings.route) {
+            SettingsScreen(
                 context = context,
                 modifier = Modifier.fillMaxSize(),
                 onBack = { navController.navigateUp() }

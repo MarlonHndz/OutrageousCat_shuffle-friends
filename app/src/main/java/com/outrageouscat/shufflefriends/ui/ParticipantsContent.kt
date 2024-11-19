@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -60,6 +61,7 @@ fun ParticipantsContent(
     onRemoveParticipant: (Int) -> Unit,
     onShuffle: () -> Unit,
     onSeeResults: () -> Unit,
+    onSettings: () -> Unit,
     showAddParticipantDialog: Boolean,
     onShowAddDialog: () -> Unit,
     onDismissAddDialog: () -> Unit,
@@ -109,6 +111,15 @@ fun ParticipantsContent(
                                 colorFilter = ColorFilter.tint(color = Color.Black)
                             )
                         }
+                    }
+
+                    IconButton(
+                        onClick = onSettings
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Settings,
+                            contentDescription = stringResource(R.string.content_description_settings_icon)
+                        )
                     }
                 }
             )

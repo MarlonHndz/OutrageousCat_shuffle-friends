@@ -133,6 +133,9 @@ fun HomeScreen(
             onSeeResults = {
                 navController.navigate(Screen.Results.route)
             },
+            onSettings = {
+                navController.navigate(Screen.Settings.route)
+            },
             onShuffle = {
                 results = shuffleParticipants(participants)
                 results?.let {

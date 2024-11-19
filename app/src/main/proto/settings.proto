@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "com.outrageouscat.shufflefriends.datastore";
+option java_outer_classname = "SettingsProto";
+
+message SettingsLocal {
+    string custom_message = 1;
+    string delivery_date = 2;
+}

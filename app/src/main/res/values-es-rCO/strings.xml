@@ -4,6 +4,7 @@
 
     <string name="screen_home">Participantes</string>
     <string name="screen_results">Resultados</string>
+    <string name="screen_settings">Configuración</string>
 
     <string name="content_description_app_logo">Shuffle friends</string>
     <string name="content_description_delete_icon_button">Eliminar todos</string>
@@ -15,6 +16,7 @@
     <string name="content_description_back_icon">Icono volver</string>
     <string name="content_description_gift_icon">icono regalo</string>
     <string name="content_description_whatsapp_icon">icono Whatsapp</string>
+    <string name="content_description_settings_icon">Settings icon</string>
 
     <string name="error_message_participant_already_exist">El participante \'%1$s\' ya existe.</string>
 
@@ -49,5 +51,22 @@
     <string name="shuffle_again_alert_title">¿Volver a sortear amigos secretos?</string>
     <string name="shuffle_again_alert_shuffle_button">Sortear</string>
     <string name="shuffle_again_alert_cancel_button">Cancelar</string>
+
+    <string name="settings_screen_title">Configuración</string>
+
+    <string-array name="months">
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Septiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
+    </string-array>
 
 </resources>
