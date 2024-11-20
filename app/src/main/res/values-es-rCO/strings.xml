@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Shuffle Friends</string>
-    <string name="developer_water_mark">© IamCleverito | Outragous Cat\nVersion 1.0 2024</string>
+    <string name="developer_water_mark">© IamCleverito | Outrageous Cat\nVersion 1.0 2024</string>
 
     <string name="screen_home">Participantes</string>
     <string name="screen_results">Resultados</string>
