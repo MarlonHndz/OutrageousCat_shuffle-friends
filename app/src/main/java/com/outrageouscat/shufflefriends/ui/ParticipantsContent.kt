@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -174,11 +174,12 @@ fun ParticipantsContent(
                         ) {
                             Row(
                                 modifier = Modifier
-                                    .fillMaxWidth()
+                                    .defaultMinSize(minHeight = 93.dp)
                                     .background(MaterialTheme.colorScheme.surface),
                             ) {
                                 Column(
                                     modifier = Modifier
+                                        .align(Alignment.CenterVertically)
                                         .weight(1f)
                                         .padding(horizontal = 16.dp, vertical = 8.dp)
                                 ) {
@@ -189,23 +190,26 @@ fun ParticipantsContent(
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis
                                     )
-                                    Text(
-                                        text = participant.phoneNumber,
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.W400,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        color = Color.DarkGray
-                                    )
-                                    Text(
-                                        text = participant.description,
-                                        fontSize = 14.sp,
-                                        fontWeight = FontWeight.W300,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Ellipsis,
-                                        fontStyle = FontStyle.Italic
-
-                                    )
+                                    if (participant.phoneNumber.isNotEmpty()) {
+                                        Text(
+                                            text = participant.phoneNumber,
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.W400,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                            color = Color.DarkGray
+                                        )
+                                    }
+                                    if (participant.description.isNotEmpty()) {
+                                        Text(
+                                            text = participant.description,
+                                            fontSize = 14.sp,
+                                            fontWeight = FontWeight.W300,
+                                            maxLines = 2,
+                                            overflow = TextOverflow.Ellipsis,
+                                            fontStyle = FontStyle.Italic
+                                        )
+                                    }
                                 }
 
                                 Row(
