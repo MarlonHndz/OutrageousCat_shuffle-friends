@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Shuffle Friends</string>
+    <string name="developer_water_mark">© IamCleverito | Outragous Cat\nVersion 1.0 2024</string>
 
     <string name="screen_home">Participants list</string>
     <string name="screen_results">Results</string>
@@ -17,6 +18,7 @@
     <string name="content_description_gift_icon">gift icon</string>
     <string name="content_description_whatsapp_icon">WhatsApp icon</string>
     <string name="content_description_settings_icon">Settings icon</string>
+    <string name="content_description_whatsapp_eye_icon">See WhatsApp message</string>
 
     <string name="error_message_participant_already_exist">The participant \'%1$s\' already exists.</string>
 
@@ -53,6 +55,26 @@
     <string name="shuffle_again_alert_cancel_button">Cancel</string>
 
     <string name="settings_screen_title">Settings</string>
+    <string name="settings_option_whatsapp_message">WhatsApp message</string>
+    <string name="settings_option_delivery_date">Delivery date</string>
+
+    <string name="custom_message_alert_title">Personalize your message</string>
+    <string name="custom_message_alert_label">Optional message</string>
+    <string name="custom_message_alert_placeholder">Ex: Do not reveal this top secret information to anyone</string>
+    <string name="custom_message_alert_save_button">Save</string>
+
+    <string name="message_preview_title">Whatsapp message</string>
+    <string name="message_preview_note">Note: Values that appear between asterisks such as *Alice* will appear in bold within WhatsApp. Ex:</string>
+    <string name="message_preview_example_hello">"Hello "</string>
+    <string name="message_preview_example_giver_name">Alice</string>
+    <string name="message_preview_example_receiver_name">Little Timmy</string>
+    <string name="message_preview_example_receiver_description">I love cats.</string>
+
+    <string name="whatsapp_message_greeting">¡Hello *%1$s*!\nYou have been assigned a 🤫 *SECRET FRIEND* 🤫\n\n</string>
+    <string name="whatsapp_message_secret_friend_name_label">🥁 and his/her name is: 🥁\n\n</string>
+    <string name="whatsapp_message_receiver_name">🌟⭐ *%1$s* ⭐🌟\n\n</string>
+    <string name="whatsapp_message_receiver_description">Who said about his/her tastes:\n\n*%1$s*</string>
+    <string name="whatsapp_message_date_label">\n\nRemember that the gifts delivery 🎁 will take place on*%1$s* 🎁</string>
 
     <string-array name="months">
         <item>January</item>

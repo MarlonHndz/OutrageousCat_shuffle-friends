@@ -41,6 +41,7 @@ import com.outrageouscat.shufflefriends.data.datastore.settingsDataStore
 import com.outrageouscat.shufflefriends.datastore.SettingsProto.SettingsLocal
 import com.outrageouscat.shufflefriends.ui.composables.rememberDatePickerDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.CustomMessageConfigDialog
+import com.outrageouscat.shufflefriends.ui.dialogs.PreviewWhatsappMessageDialog
 import com.outrageouscat.shufflefriends.ui.util.toMonthName
 import kotlinx.coroutines.launch
 
@@ -54,12 +55,15 @@ fun SettingsScreen(
 
     val configDataStore = context.settingsDataStore
     val settings by configDataStore.data.collectAsState(initial = SettingsLocal.getDefaultInstance())
+    var customMessage by remember { mutableStateOf("") }
     var deliveryDate by remember { mutableStateOf("") }
 
-    var showCustomMessageDialog by remember { mutableStateOf(false) }
+    var showEditCustomMessageDialog by remember { mutableStateOf(false) }
+    var showCustomMessagePreviewDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(settings.deliveryDate) {
+        customMessage = settings.customMessage
         deliveryDate = settings.deliveryDate
     }
 
@@ -111,6 +115,7 @@ fun SettingsScreen(
                     .padding(bottom = 80.dp),
             ) {
                 Text(
+                    modifier = Modifier.padding(8.dp),
                     text = stringResource(R.string.settings_screen_title),
                     fontSize = 32.sp,
                     fontWeight = FontWeight.W300,
@@ -121,25 +126,25 @@ fun SettingsScreen(
                 Row(
                     modifier = Modifier
                         .clickable(
-                            onClick = { showCustomMessageDialog = true }
+                            onClick = { showEditCustomMessageDialog = true }
                         )
                 ) {
                     Text(
                         modifier = Modifier
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 16.dp)
                             .weight(1f)
                             .align(Alignment.CenterVertically),
-                        text = "Mensaje de WhatsApp",
+                        text = stringResource(R.string.settings_option_whatsapp_message),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.W300,
                     )
 
                     IconButton(
-                        onClick = { }
+                        onClick = { showCustomMessagePreviewDialog = true }
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.eye_icon),
-                            contentDescription = "Ver mensaje de WhatsApp"
+                            contentDescription = stringResource(R.string.content_description_whatsapp_eye_icon)
                         )
                     }
                 }
@@ -159,10 +164,10 @@ fun SettingsScreen(
                 ) {
                     Text(
                         modifier = Modifier
-                            .padding(horizontal = 8.dp, vertical = 12.dp)
+                            .padding(horizontal = 16.dp, vertical = 12.dp)
                             .weight(1f)
                             .align(Alignment.CenterVertically),
-                        text = "Fecha de entrega",
+                        text = stringResource(R.string.settings_option_delivery_date),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.W300,
                     )
@@ -188,7 +193,7 @@ fun SettingsScreen(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(8.dp),
-                text = "© IamCleverito | Outragous Cat\nVersion 1.0 2024",
+                text = stringResource(R.string.developer_water_mark),
                 textAlign = TextAlign.Center,
                 color = Color.LightGray,
                 fontSize = 14.sp,
@@ -196,18 +201,29 @@ fun SettingsScreen(
                 fontStyle = FontStyle.Italic
             )
 
-            if (showCustomMessageDialog) {
+            if (showEditCustomMessageDialog) {
                 CustomMessageConfigDialog(
-                    onConfirm = { customMessage ->
+                    initialCustomMessage = customMessage,
+                    onConfirm = { newCustomMessage ->
                         scope.launch {
                             configDataStore.updateData {
                                 it.toBuilder()
-                                    .setCustomMessage(customMessage)
+                                    .setCustomMessage(newCustomMessage)
                                     .build()
                             }
                         }
+                        customMessage = newCustomMessage
+                        showEditCustomMessageDialog = false
                     },
-                    onDismiss = { showCustomMessageDialog = false }
+                    onDismiss = { showEditCustomMessageDialog = false }
+                )
+            }
+
+            if (showCustomMessagePreviewDialog) {
+                PreviewWhatsappMessageDialog(
+                    customMessage = customMessage,
+                    deliveryDate = deliveryDate,
+                    onDismiss = { showCustomMessagePreviewDialog = false },
                 )
             }
         }

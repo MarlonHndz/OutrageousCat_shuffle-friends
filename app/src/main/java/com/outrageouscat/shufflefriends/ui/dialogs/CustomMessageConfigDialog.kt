@@ -18,18 +18,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.outrageouscat.shufflefriends.R
 
 @Composable
 fun CustomMessageConfigDialog(
+    initialCustomMessage: String,
     onConfirm: (customMessage: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    var customMessage by remember { mutableStateOf("") }
+    var customMessage by remember { mutableStateOf(initialCustomMessage) }
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -41,7 +44,7 @@ fun CustomMessageConfigDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Personaliza tu mensaje",
+                    text = stringResource(R.string.custom_message_alert_title),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.W300,
                 )
@@ -50,10 +53,10 @@ fun CustomMessageConfigDialog(
                 OutlinedTextField(
                     value = customMessage,
                     onValueChange = { customMessage = it },
-                    label = { Text("Mensaje Opcional") },
+                    label = { Text(stringResource(R.string.custom_message_alert_label)) },
                     placeholder = {
                         Text(
-                            text = "Ej: No reveles está información ultra secreta con nadie",
+                            text = stringResource(R.string.custom_message_alert_placeholder),
                             color = Color.Gray,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.W300,
@@ -68,12 +71,11 @@ fun CustomMessageConfigDialog(
                 // Save message and date
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = customMessage.isNotEmpty(),
                     onClick = {
-                        if (customMessage.isNotEmpty()) onConfirm(customMessage)
+                        onConfirm(customMessage)
                     }
                 ) {
-                    Text("Guardar")
+                    Text(stringResource(R.string.custom_message_alert_save_button))
                 }
             }
         }

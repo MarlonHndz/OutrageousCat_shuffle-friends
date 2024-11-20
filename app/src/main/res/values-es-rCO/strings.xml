@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Shuffle Friends</string>
+    <string name="developer_water_mark">© IamCleverito | Outragous Cat\nVersion 1.0 2024</string>
 
     <string name="screen_home">Participantes</string>
     <string name="screen_results">Resultados</string>
@@ -17,6 +18,7 @@
     <string name="content_description_gift_icon">icono regalo</string>
     <string name="content_description_whatsapp_icon">icono Whatsapp</string>
     <string name="content_description_settings_icon">Settings icon</string>
+    <string name="content_description_whatsapp_eye_icon">Ver mensaje de WhatsApp</string>
 
     <string name="error_message_participant_already_exist">El participante \'%1$s\' ya existe.</string>
 
@@ -53,6 +55,26 @@
     <string name="shuffle_again_alert_cancel_button">Cancelar</string>
 
     <string name="settings_screen_title">Configuración</string>
+    <string name="settings_option_whatsapp_message">Mensaje de WhatsApp</string>
+    <string name="settings_option_delivery_date">Fecha de entrega</string>
+
+    <string name="custom_message_alert_title">Personaliza tu mensaje</string>
+    <string name="custom_message_alert_label">Mensaje Opcional</string>
+    <string name="custom_message_alert_placeholder">Ej: No reveles está información ultra secreta con nadie</string>
+    <string name="custom_message_alert_save_button">Guardar</string>
+
+    <string name="message_preview_title">Mensaje de Whatsapp</string>
+    <string name="message_preview_note">Nota: Los valores que aparecen entre astericos como *Alicia* se verán en negrita dentro de WhatsApp. Ej:</string>
+    <string name="message_preview_example_hello">"Hola "</string>
+    <string name="message_preview_example_giver_name">Alicia</string>
+    <string name="message_preview_example_receiver_name">El Pequeño Timmy</string>
+    <string name="message_preview_example_receiver_description">Me gustan los gatos.</string>
+
+    <string name="whatsapp_message_greeting">¡Hola *%1$s*!\nSe te ha asignado un 🤫 *AMIGO SECRETO* 🤫\n\n</string>
+    <string name="whatsapp_message_secret_friend_name_label">🥁 Y su nombre es: 🥁\n\n</string>
+    <string name="whatsapp_message_receiver_name">🌟⭐ *%1$s* ⭐🌟\n\n</string>
+    <string name="whatsapp_message_receiver_description">Quien dijo respecto a sus gustos:\n\n*%1$s*</string>
+    <string name="whatsapp_message_date_label">\n\nRecuerda que la entrega de regalos 🎁 se realizará el *%1$s* 🎁</string>
 
     <string-array name="months">
         <item>Enero</item>
