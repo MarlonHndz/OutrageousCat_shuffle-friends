@@ -54,15 +54,13 @@ fun SettingsScreen(
 ) {
 
     val settings by viewModel.settings.collectAsState()
-    var customMessage by remember { mutableStateOf(settings.customMessage) }
-    var deliveryDate by remember { mutableStateOf(settings.deliveryDate) }
 
     var showEditCustomMessageDialog by remember { mutableStateOf(false) }
     var showCustomMessagePreviewDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     val datePickerDialog = rememberDatePickerDialog(onDateSelected = { day, month ->
-        deliveryDate = "$day de ${month.toMonthName(context)}"
+        val deliveryDate = "$day de ${month.toMonthName(context)}"
         viewModel.updateDeliveryDate(deliveryDate)
     })
 
@@ -164,7 +162,7 @@ fun SettingsScreen(
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .align(Alignment.CenterVertically),
-                        text = deliveryDate,
+                        text = settings.deliveryDate,
                         color = Color.Gray,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.W300,
@@ -191,12 +189,11 @@ fun SettingsScreen(
 
             if (showEditCustomMessageDialog) {
                 CustomMessageConfigDialog(
-                    initialCustomMessage = customMessage,
+                    initialCustomMessage = settings.customMessage,
                     onConfirm = { newCustomMessage ->
                         scope.launch {
                             viewModel.updateCustomMessage(newCustomMessage)
                         }
-                        customMessage = newCustomMessage
                         showEditCustomMessageDialog = false
                     },
                     onDismiss = { showEditCustomMessageDialog = false }
@@ -206,8 +203,8 @@ fun SettingsScreen(
             if (showCustomMessagePreviewDialog) {
                 PreviewWhatsappMessageDialog(
                     context = context,
-                    customMessage = customMessage,
-                    deliveryDate = deliveryDate,
+                    customMessage = settings.customMessage,
+                    deliveryDate = settings.deliveryDate,
                     onDismiss = { showCustomMessagePreviewDialog = false },
                 )
             }

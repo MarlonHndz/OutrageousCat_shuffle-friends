@@ -7,6 +7,8 @@ import com.outrageouscat.shufflefriends.domain.useCases.ParticipantsUseCase
 import com.outrageouscat.shufflefriends.domain.useCases.ResultsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -30,9 +32,13 @@ class HomeViewModel(
 
     private fun loadParticipants() {
         viewModelScope.launch {
-            participantsUseCase.participants.collect {
-                _participants.value = it
-            }
+            combine(
+                participantsUseCase.participants,
+                resultsUseCase.results
+            ) { participants, results ->
+                _participants.value = participants
+                _isResultsEmpty.value = results.isEmpty()
+            }.collect()
         }
     }
 
