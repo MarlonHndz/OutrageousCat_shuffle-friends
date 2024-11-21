@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -31,6 +32,7 @@ fun RevelationDialog(
     val giverName = participants[selectedIndex].name
     val receiverName = results[giverName]?.name.toString()
     val receiverDescription = results[giverName]?.description.toString()
+
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = MaterialTheme.shapes.medium,
@@ -80,4 +82,24 @@ fun RevelationDialog(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewRevelationDialog() {
+    val participant = Participant(
+        name = stringResource(R.string.message_preview_example_giver_name),
+        phoneNumber = "",
+        description = stringResource(R.string.message_preview_example_receiver_description)
+    )
+    val results = mapOf<String, Participant>(
+        stringResource(R.string.message_preview_example_giver_name)to
+        participant
+    )
+    RevelationDialog(
+        participants = listOf(participant),
+        results = results,
+        selectedIndex = 0,
+        onDismiss = {}
+    )
 }

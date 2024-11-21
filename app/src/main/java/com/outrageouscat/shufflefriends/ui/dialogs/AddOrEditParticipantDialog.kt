@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -72,9 +73,7 @@ fun AddOrEditParticipantDialog(
                     value = phone,
                     onValueChange = { phone = it },
                     label = { Text(stringResource(R.string.add_edit_alert_label_phone_number)) },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number
-                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 )
                 OutlinedTextField(
                     modifier = Modifier.padding(bottom = 8.dp),
@@ -109,4 +108,14 @@ fun AddOrEditParticipantDialog(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewAddOrEditParticipantDialog() {
+    AddOrEditParticipantDialog(
+        alertTitle = stringResource(R.string.add_edit_alert_title_add_participant),
+        onConfirm = { name, phone, description -> },
+        onDismiss = { },
+    )
 }
