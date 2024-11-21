@@ -30,6 +30,7 @@ output.json
 .idea/
 misc.xml
 deploymentTargetDropDown.xml
+deploymentTargetSelector.xml
 render.experimental.xml
 
 # Keystore files
