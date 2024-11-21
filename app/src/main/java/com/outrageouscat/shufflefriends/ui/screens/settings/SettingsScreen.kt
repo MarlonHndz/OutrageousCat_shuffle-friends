@@ -1,4 +1,4 @@
-package com.outrageouscat.shufflefriends.ui
+package com.outrageouscat.shufflefriends.ui.screens.settings
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -96,7 +97,7 @@ fun SettingsScreen(
                         onClick = onBack
                     ) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Default.ArrowBack,
+                            imageVector = Icons.Default.ArrowBack,
                             contentDescription = stringResource(R.string.content_description_back_icon)
                         )
                     }

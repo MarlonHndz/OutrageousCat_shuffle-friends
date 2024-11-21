@@ -7,9 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.outrageouscat.shufflefriends.ui.HomeScreen
-import com.outrageouscat.shufflefriends.ui.ResultsScreen
-import com.outrageouscat.shufflefriends.ui.SettingsScreen
+import com.outrageouscat.shufflefriends.ui.screens.home.HomeScreen
+import com.outrageouscat.shufflefriends.ui.screens.results.ResultsScreen
+import com.outrageouscat.shufflefriends.ui.screens.settings.SettingsScreen
 
 @Composable
 fun NavigationHost(

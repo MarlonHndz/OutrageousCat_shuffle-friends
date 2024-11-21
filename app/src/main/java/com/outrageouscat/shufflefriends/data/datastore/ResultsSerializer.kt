@@ -1,10 +1,7 @@
 package com.outrageouscat.shufflefriends.data.datastore
 
-import android.content.Context
 import androidx.datastore.core.CorruptionException
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
-import androidx.datastore.dataStore
 import com.google.protobuf.InvalidProtocolBufferException
 import com.outrageouscat.shufflefriends.datastore.ResultsProto.ResultsList
 import java.io.InputStream
@@ -26,8 +23,3 @@ object ResultsSerializer : Serializer<ResultsList> {
         t.writeTo(output)
     }
 }
-
-val Context.resultsDataStore: DataStore<ResultsList> by dataStore(
-    fileName = "results.pb",
-    serializer = ResultsSerializer
-)

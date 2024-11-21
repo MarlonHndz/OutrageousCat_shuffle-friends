@@ -17,6 +17,8 @@ dataStore = "1.1.1"
 
 coroutines = "1.8.1"
 
+koin = "4.0.0"
+
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -38,9 +40,11 @@ google-protobuf = { group = "com.google.protobuf", name = "protobuf-javalite", v
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
 androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "dataStore" }
 
-
 kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+koin = {group = "io.insert-koin", name="koin-android", version.ref="koin"}
+koin-compose = {group = "io.insert-koin", name="koin-androidx-compose", version.ref="koin"}
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

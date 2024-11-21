@@ -9,19 +9,22 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.outrageouscat.shufflefriends.ui.navigation.NavigationHost
 import com.outrageouscat.shufflefriends.ui.theme.ShuffleFriendsTheme
+import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ShuffleFriendsTheme {
-                val navController = rememberNavController()
-                NavigationHost(
-                    context = this@MainActivity,
-                    modifier = Modifier.fillMaxSize(),
-                    navController = navController
-                )
+            KoinContext {
+                ShuffleFriendsTheme {
+                    val navController = rememberNavController()
+                    NavigationHost(
+                        context = this@MainActivity,
+                        modifier = Modifier.fillMaxSize(),
+                        navController = navController
+                    )
+                }
             }
         }
     }

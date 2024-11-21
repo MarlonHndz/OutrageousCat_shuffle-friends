@@ -1,9 +1,6 @@
 package com.outrageouscat.shufflefriends.data.datastore
 
-import android.content.Context
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
-import androidx.datastore.dataStore
 import com.outrageouscat.shufflefriends.data.models.ParticipantsList
 import kotlinx.serialization.json.Json
 import java.io.InputStream
@@ -32,7 +29,4 @@ object ParticipantsSerializer : Serializer<ParticipantsList> {
     }
 }
 
-val Context.participantsListDataStore: DataStore<ParticipantsList> by dataStore(
-    fileName = "participants.json",
-    serializer = ParticipantsSerializer
-)
+

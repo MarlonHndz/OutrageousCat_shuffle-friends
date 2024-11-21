@@ -1,4 +1,4 @@
-package com.outrageouscat.shufflefriends.ui
+package com.outrageouscat.shufflefriends.ui.screens.results
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
@@ -32,10 +33,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -51,13 +50,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.outrageouscat.shufflefriends.R
-import com.outrageouscat.shufflefriends.data.datastore.participantsListDataStore
-import com.outrageouscat.shufflefriends.data.datastore.resultsDataStore
 import com.outrageouscat.shufflefriends.data.models.Participant
-import com.outrageouscat.shufflefriends.data.models.ParticipantsList
-import com.outrageouscat.shufflefriends.datastore.ResultsProto.ResultsList
 import com.outrageouscat.shufflefriends.ui.dialogs.RevelationDialog
-import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import kotlin.String
 import kotlin.random.Random
 
@@ -66,41 +61,19 @@ import kotlin.random.Random
 fun ResultsScreen(
     context: Context,
     modifier: Modifier,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    viewModel: ResultsViewModel = koinViewModel()
 ) {
-    var selectedIndex by remember { mutableIntStateOf(0) }
+    val participants by viewModel.participants.collectAsState()
+    val results by viewModel.results.collectAsState()
+    val selectedIndex by viewModel.selectedIndex.collectAsState()
 
-    val participantsListDataStore = context.participantsListDataStore
-    val participantsListLocal by participantsListDataStore.data.collectAsState(
-        initial = ParticipantsList(emptyList())
-    )
-    val participants = participantsListLocal.participants
-
-    val resultsDataStore = context.resultsDataStore
-    val resultsListLocal by resultsDataStore.data.collectAsState(initial = ResultsList.getDefaultInstance())
-
-    // Convert resultsMap to format Map<String, Participant>
-    val results = resultsListLocal.resultsMap
-        .map { (key, value) ->
-            val giver = key.toString()
-            val receiver = Participant(
-                name = value.name,
-                phoneNumber = value.phoneNumber,
-                description = value.description
-            )
-            giver to receiver
-        }.toMap()
-
-    var showResultDialog by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
-
-    val scope = rememberCoroutineScope()
-
+    var showResultDialog by remember { mutableStateOf(false) }
 
     // Update selectedIndex whenever the user scrolls
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex }
-            .collect { index -> selectedIndex = index }
+    LaunchedEffect(selectedIndex) {
+        listState.animateScrollToItem(selectedIndex)
     }
 
     Scaffold(
@@ -121,7 +94,7 @@ fun ResultsScreen(
                         onClick = onBack
                     ) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Default.ArrowBack,
+                            imageVector = Icons.Default.ArrowBack,
                             contentDescription = stringResource(R.string.content_description_back_icon)
                         )
                     }
@@ -217,6 +190,12 @@ fun ResultsScreen(
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
                     onClick = {
+                        // TODO: validar acá si existe una fecha ya guardada
+                        // en caso de haber fecha, envía el mensaje
+                        // si no hay fecha, popUp para decir:
+                        // ¡Falta la fecha!
+                        // Configura la fecha de entraga de regalos para adjuntarla en tu mensaje
+                        // Boton: Ir a configurar (navega a settings)
                         sendWhatsappMessage(
                             context = context,
                             participants = participants,
@@ -269,26 +248,16 @@ fun ResultsScreen(
             ) {
                 // Previous Button
                 Button(
-                    onClick = {
-                        if (selectedIndex > 0) {
-                            selectedIndex -= 1
-                            scope.launch { listState.animateScrollToItem(selectedIndex) }
-                        }
-                    },
-                    enabled = selectedIndex > 0
+                    onClick = { viewModel.moveToPreviousParticipant() },
+                    enabled = viewModel.canMoveToPrevious.collectAsState(initial = false).value
                 ) {
                     Text(stringResource(R.string.results_previous_button))
                 }
 
                 // Next Button
                 Button(
-                    onClick = {
-                        if (selectedIndex < participants.size - 1) {
-                            selectedIndex += 1
-                            scope.launch { listState.animateScrollToItem(selectedIndex) }
-                        }
-                    },
-                    enabled = selectedIndex < participants.size - 1
+                    onClick = { viewModel.moveToNextParticipant() },
+                    enabled = viewModel.canMoveToNext.collectAsState(initial = false).value
                 ) {
                     Text(stringResource(R.string.results_next_button))
                 }
@@ -309,6 +278,9 @@ fun sendWhatsappMessage(
     val receiverName = results[giverName]?.name.toString()
     val receiverDescription = results[giverName]?.description.toString()
 
+    // TODO: este mensaje ya no se encontrará aquí
+    // borrar este mensaje, y tomar el del preview, en un object
+    // obteniendo la información guardada.
     val whatsappMessage =
         "¡Hola *$giverName*!\n" +
                 "Se te ha asignado un 🤫 *AMIGO SECRETO* 🤫\n\n" +

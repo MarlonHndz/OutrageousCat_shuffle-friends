@@ -1,4 +1,4 @@
-package com.outrageouscat.shufflefriends.ui
+package com.outrageouscat.shufflefriends.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -71,7 +71,6 @@ fun ParticipantsContent(
 ) {
     var editParticipantDialog by remember { mutableStateOf(false) }
     var editingParticipant by remember { mutableStateOf(Participant("", "", "")) }
-    var editingName by remember { mutableStateOf("") }
     var editingIndex by remember { mutableIntStateOf(-1) }
 
     Scaffold(
