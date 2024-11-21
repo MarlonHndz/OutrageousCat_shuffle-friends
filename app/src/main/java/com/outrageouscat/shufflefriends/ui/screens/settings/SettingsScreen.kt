@@ -19,7 +19,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,45 +37,33 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.outrageouscat.shufflefriends.R
-import com.outrageouscat.shufflefriends.data.datastore.settingsDataStore
-import com.outrageouscat.shufflefriends.datastore.SettingsProto.SettingsLocal
 import com.outrageouscat.shufflefriends.ui.composables.rememberDatePickerDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.CustomMessageConfigDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.PreviewWhatsappMessageDialog
 import com.outrageouscat.shufflefriends.ui.util.toMonthName
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     context: Context,
     modifier: Modifier,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    viewModel: SettingsViewModel = koinViewModel()
 ) {
 
-    val configDataStore = context.settingsDataStore
-    val settings by configDataStore.data.collectAsState(initial = SettingsLocal.getDefaultInstance())
-    var customMessage by remember { mutableStateOf("") }
-    var deliveryDate by remember { mutableStateOf("") }
+    val settings by viewModel.settings.collectAsState()
+    var customMessage by remember { mutableStateOf(settings.customMessage) }
+    var deliveryDate by remember { mutableStateOf(settings.deliveryDate) }
 
     var showEditCustomMessageDialog by remember { mutableStateOf(false) }
     var showCustomMessagePreviewDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(settings.deliveryDate) {
-        customMessage = settings.customMessage
-        deliveryDate = settings.deliveryDate
-    }
-
     val datePickerDialog = rememberDatePickerDialog(onDateSelected = { day, month ->
         deliveryDate = "$day de ${month.toMonthName(context)}"
-        scope.launch {
-            configDataStore.updateData {
-                it.toBuilder()
-                    .setDeliveryDate(deliveryDate)
-                    .build()
-            }
-        }
+        viewModel.updateDeliveryDate(deliveryDate)
     })
 
     Scaffold(
@@ -207,11 +194,7 @@ fun SettingsScreen(
                     initialCustomMessage = customMessage,
                     onConfirm = { newCustomMessage ->
                         scope.launch {
-                            configDataStore.updateData {
-                                it.toBuilder()
-                                    .setCustomMessage(newCustomMessage)
-                                    .build()
-                            }
+                            viewModel.updateCustomMessage(newCustomMessage)
                         }
                         customMessage = newCustomMessage
                         showEditCustomMessageDialog = false

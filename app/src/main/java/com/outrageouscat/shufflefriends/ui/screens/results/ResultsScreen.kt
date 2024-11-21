@@ -1,9 +1,5 @@
 package com.outrageouscat.shufflefriends.ui.screens.results
 
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +32,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,17 +45,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.outrageouscat.shufflefriends.R
-import com.outrageouscat.shufflefriends.data.models.Participant
 import com.outrageouscat.shufflefriends.ui.dialogs.RevelationDialog
-import com.outrageouscat.shufflefriends.ui.util.WhatsappMessageHelper
 import org.koin.androidx.compose.koinViewModel
-import kotlin.String
 import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResultsScreen(
-    context: Context,
     modifier: Modifier,
     onBack: () -> Unit,
     viewModel: ResultsViewModel = koinViewModel()

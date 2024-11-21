@@ -1,0 +1,24 @@
+package com.outrageouscat.shufflefriends.domain.useCases
+
+import com.outrageouscat.shufflefriends.data.respositories.SettingsRepository
+import com.outrageouscat.shufflefriends.datastore.SettingsProto.SettingsLocal
+import kotlinx.coroutines.flow.Flow
+
+class SettingsUseCase(
+    private val settingsRepository: SettingsRepository
+) {
+    val settings: Flow<SettingsLocal>
+        get() = settingsRepository.settings
+
+    suspend fun updateSettings(newSettings: SettingsLocal) {
+        settingsRepository.updateSettings(newSettings)
+    }
+
+    suspend fun updateCustomMessage(newMessage: String) {
+        settingsRepository.updateCustomMessage(newMessage)
+    }
+
+    suspend fun updateDeliveryDate(newDate: String) {
+        settingsRepository.updateDeliveryDate(newDate)
+    }
+}
