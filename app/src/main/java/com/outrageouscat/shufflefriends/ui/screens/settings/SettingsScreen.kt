@@ -222,6 +222,7 @@ fun SettingsScreen(
 
             if (showCustomMessagePreviewDialog) {
                 PreviewWhatsappMessageDialog(
+                    context = context,
                     customMessage = customMessage,
                     deliveryDate = deliveryDate,
                     onDismiss = { showCustomMessagePreviewDialog = false },

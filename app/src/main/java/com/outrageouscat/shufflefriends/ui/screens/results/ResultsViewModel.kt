@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.outrageouscat.shufflefriends.data.models.Participant
 import com.outrageouscat.shufflefriends.domain.useCases.ParticipantsUseCase
 import com.outrageouscat.shufflefriends.domain.useCases.ResultsUseCase
+import com.outrageouscat.shufflefriends.domain.useCases.WhatsappMessageUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,7 +18,8 @@ import kotlinx.coroutines.flow.update
 
 class ResultsViewModel(
     private val participantsUseCase: ParticipantsUseCase,
-    private val resultsUseCase: ResultsUseCase
+    private val resultsUseCase: ResultsUseCase,
+    private val whatsappMessageUseCase: WhatsappMessageUseCase
 ) : ViewModel() {
 
     val participants: StateFlow<List<Participant>> = participantsUseCase.participants
@@ -49,5 +51,13 @@ class ResultsViewModel(
 
     fun moveToNextParticipant() {
         _selectedIndex.update { index -> index + 1 }
+    }
+
+    fun sendMessage() {
+        whatsappMessageUseCase.sendMessage(
+            selectedIndex = _selectedIndex.value,
+            participants= participants.value,
+            results = results.value
+        )
     }
 }

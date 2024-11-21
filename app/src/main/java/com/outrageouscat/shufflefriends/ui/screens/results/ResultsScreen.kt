@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.sp
 import com.outrageouscat.shufflefriends.R
 import com.outrageouscat.shufflefriends.data.models.Participant
 import com.outrageouscat.shufflefriends.ui.dialogs.RevelationDialog
+import com.outrageouscat.shufflefriends.ui.util.WhatsappMessageHelper
 import org.koin.androidx.compose.koinViewModel
 import kotlin.String
 import kotlin.random.Random
@@ -196,12 +197,7 @@ fun ResultsScreen(
                         // ¡Falta la fecha!
                         // Configura la fecha de entraga de regalos para adjuntarla en tu mensaje
                         // Boton: Ir a configurar (navega a settings)
-                        sendWhatsappMessage(
-                            context = context,
-                            participants = participants,
-                            results = results,
-                            selectedIndex = selectedIndex,
-                        )
+                        viewModel.sendMessage()
                     }
                 ) {
                     Text(
@@ -263,45 +259,5 @@ fun ResultsScreen(
                 }
             }
         }
-    }
-}
-
-fun sendWhatsappMessage(
-    context: Context,
-    participants: List<Participant>,
-    results: Map<String, Participant>,
-    selectedIndex: Int,
-) {
-    val giverName = participants[selectedIndex].name
-    val giverPhone = "57" + participants[selectedIndex].phoneNumber
-
-    val receiverName = results[giverName]?.name.toString()
-    val receiverDescription = results[giverName]?.description.toString()
-
-    // TODO: este mensaje ya no se encontrará aquí
-    // borrar este mensaje, y tomar el del preview, en un object
-    // obteniendo la información guardada.
-    val whatsappMessage =
-        "¡Hola *$giverName*!\n" +
-                "Se te ha asignado un 🤫 *AMIGO SECRETO* 🤫\n\n" +
-                "No compartas esta información con nadie o 😒🔪 *vidas podrían correr peligro 🔪🩸.*\n\n" +
-                "🥁 El nombre de tu amigo secreto es: 🥁\n\n" +
-                "🌟⭐ *$receiverName* ⭐🌟\n\n" +
-                "Quien dijo respecto a sus gustos: \n\n" +
-                "*$receiverDescription*\n\n" +
-                "Recuerda que la entrega de regalos 🎁 se realizará el *24 de Diciembre a la media noche* 🎁"
-
-    val whatsappIntent = Intent(Intent.ACTION_SEND)
-    whatsappIntent.setType("text/plain")
-    whatsappIntent.setPackage("com.whatsapp")
-    whatsappIntent.putExtra(Intent.EXTRA_TEXT, whatsappMessage)
-
-    whatsappIntent.putExtra("jid", "$giverPhone@s.whatsapp.net")
-
-    try {
-        context.startActivity(whatsappIntent)
-    } catch (error: ActivityNotFoundException) {
-        error.printStackTrace()
-        Toast.makeText(context, "¡¡¡NO TIENES WHATSAPP SUBNORMAL!!!", Toast.LENGTH_SHORT).show()
     }
 }

@@ -75,6 +75,7 @@
     <string name="whatsapp_message_receiver_name">🌟⭐ *%1$s* ⭐🌟\n\n</string>
     <string name="whatsapp_message_receiver_description">Quien dijo respecto a sus gustos:\n\n*%1$s*</string>
     <string name="whatsapp_message_date_label">\n\nRecuerda que la entrega de regalos 🎁 se realizará el *%1$s* 🎁</string>
+    <string name="whatsapp_message_no_app_installed">No tienes WhatsApp instalado</string>
 
     <string-array name="months">
         <item>Enero</item>

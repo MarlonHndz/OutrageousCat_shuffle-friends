@@ -1,5 +1,6 @@
 package com.outrageouscat.shufflefriends.ui.dialogs
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -24,32 +26,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.outrageouscat.shufflefriends.R
+import com.outrageouscat.shufflefriends.ui.util.WhatsappMessageHelper
 
 @Composable
 fun PreviewWhatsappMessageDialog(
+    context: Context,
     customMessage: String,
     deliveryDate: String,
     onDismiss: () -> Unit
 ) {
-    val exampleGiverName = stringResource(R.string.message_preview_example_giver_name)
-    val exampleReceiverName = stringResource(R.string.message_preview_example_receiver_name)
-    val exampleReceiverDescription =
-        stringResource(R.string.message_preview_example_receiver_description)
-
-    val whatsappMessage =
-        stringResource(R.string.whatsapp_message_greeting, exampleGiverName) +
-                if (customMessage.isNotEmpty()) {
-                    customMessage + "\n\n"
-                } else {
-                    ""
-                } +
-                stringResource(R.string.whatsapp_message_secret_friend_name_label) +
-                stringResource(R.string.whatsapp_message_receiver_name, exampleReceiverName) +
-                stringResource(
-                    R.string.whatsapp_message_receiver_description,
-                    exampleReceiverDescription
-                ) +
-                stringResource(R.string.whatsapp_message_date_label, deliveryDate)
+    val whatsappMessage = WhatsappMessageHelper.createMessage(
+        context = context,
+        giverName = stringResource(R.string.message_preview_example_giver_name),
+        receiverName = stringResource(R.string.message_preview_example_receiver_name),
+        receiverDescription = stringResource(R.string.message_preview_example_receiver_description),
+        customMessage = customMessage,
+        deliveryDate = deliveryDate
+    )
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -100,7 +93,7 @@ fun PreviewWhatsappMessageDialog(
                     Text(
                         modifier = Modifier
                             .padding(vertical = 0.dp),
-                        text = exampleGiverName,
+                        text = stringResource(R.string.message_preview_example_giver_name),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.W600,
                     )
@@ -114,6 +107,7 @@ fun PreviewWhatsappMessageDialog(
 @Composable
 fun PreviewForPreviewWhatsappMessageDialog() {
     PreviewWhatsappMessageDialog(
+        context = LocalContext.current,
         customMessage = "",
         deliveryDate = "",
         onDismiss = {}
