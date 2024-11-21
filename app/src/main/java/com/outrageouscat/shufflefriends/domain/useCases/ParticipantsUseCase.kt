@@ -1,7 +1,7 @@
 package com.outrageouscat.shufflefriends.domain.useCases
 
 import com.outrageouscat.shufflefriends.data.models.Participant
-import com.outrageouscat.shufflefriends.data.respositories.ParticipantsRepository
+import com.outrageouscat.shufflefriends.domain.respositories.ParticipantsRepository
 import kotlinx.coroutines.flow.Flow
 
 class ParticipantsUseCase(

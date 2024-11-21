@@ -2,14 +2,16 @@ package com.outrageouscat.shufflefriends.data.respositories
 
 import androidx.datastore.core.DataStore
 import com.outrageouscat.shufflefriends.datastore.SettingsProto.SettingsLocal
+import com.outrageouscat.shufflefriends.domain.respositories.SettingsRepository
 import kotlinx.coroutines.flow.Flow
 
-class SettingsRepository(
+class SettingsRepositoryImpl(
     private val settingsDataStore: DataStore<SettingsLocal>
-) {
-    val settings: Flow<SettingsLocal> = settingsDataStore.data
+) : SettingsRepository {
 
-    suspend fun updateSettings(newSettings: SettingsLocal) {
+    override val settings: Flow<SettingsLocal> = settingsDataStore.data
+
+    override suspend fun updateSettings(newSettings: SettingsLocal) {
         settingsDataStore.updateData { currentSettings ->
             currentSettings.toBuilder()
                 .setCustomMessage(newSettings.customMessage)
@@ -18,7 +20,7 @@ class SettingsRepository(
         }
     }
 
-    suspend fun updateCustomMessage(newMessage: String) {
+    override suspend fun updateCustomMessage(newMessage: String) {
         settingsDataStore.updateData { currentSettings ->
             currentSettings.toBuilder()
                 .setCustomMessage(newMessage)
@@ -26,7 +28,7 @@ class SettingsRepository(
         }
     }
 
-    suspend fun updateDeliveryDate(newDate: String) {
+    override suspend fun updateDeliveryDate(newDate: String) {
         settingsDataStore.updateData { currentSettings ->
             currentSettings.toBuilder()
                 .setDeliveryDate(newDate)

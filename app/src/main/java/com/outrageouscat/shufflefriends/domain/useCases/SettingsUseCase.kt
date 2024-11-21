@@ -1,7 +1,7 @@
 package com.outrageouscat.shufflefriends.domain.useCases
 
-import com.outrageouscat.shufflefriends.data.respositories.SettingsRepository
 import com.outrageouscat.shufflefriends.datastore.SettingsProto.SettingsLocal
+import com.outrageouscat.shufflefriends.domain.respositories.SettingsRepository
 import kotlinx.coroutines.flow.Flow
 
 class SettingsUseCase(
