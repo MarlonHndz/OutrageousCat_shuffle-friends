@@ -44,8 +44,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.outrageouscat.shufflefriends.R
+import com.outrageouscat.shufflefriends.ui.dialogs.DateIsMissingAlertDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.RevelationDialog
+import com.outrageouscat.shufflefriends.ui.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 import kotlin.random.Random
 
@@ -54,11 +57,13 @@ import kotlin.random.Random
 fun ResultsScreen(
     modifier: Modifier,
     onBack: () -> Unit,
+    navController: NavHostController,
     viewModel: ResultsViewModel = koinViewModel()
 ) {
     val participants by viewModel.participants.collectAsState()
     val results by viewModel.results.collectAsState()
     val selectedIndex by viewModel.selectedIndex.collectAsState()
+    val alertMessage by viewModel.alertMessage.collectAsState()
 
     val listState = rememberLazyListState()
     var showResultDialog by remember { mutableStateOf(false) }
@@ -182,12 +187,6 @@ fun ResultsScreen(
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
                     onClick = {
-                        // TODO: validar acá si existe una fecha ya guardada
-                        // en caso de haber fecha, envía el mensaje
-                        // si no hay fecha, popUp para decir:
-                        // ¡Falta la fecha!
-                        // Configura la fecha de entraga de regalos para adjuntarla en tu mensaje
-                        // Boton: Ir a configurar (navega a settings)
                         viewModel.sendMessage()
                     }
                 ) {
@@ -223,6 +222,16 @@ fun ResultsScreen(
                         selectedIndex = selectedIndex,
                         onDismiss = { showResultDialog = false }
                     )
+                }
+
+                alertMessage?.let {
+                    DateIsMissingAlertDialog(
+                        alertTitle = it,
+                        onConfirm = {
+                            viewModel.dismissAlert()
+                            navController.navigate(Screen.Settings.route)
+                        },
+                        onDismiss = { viewModel.dismissAlert() })
                 }
             }
 

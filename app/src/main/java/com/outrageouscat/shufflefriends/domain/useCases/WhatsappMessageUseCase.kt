@@ -6,31 +6,65 @@ import android.content.Intent
 import android.widget.Toast
 import com.outrageouscat.shufflefriends.R
 import com.outrageouscat.shufflefriends.data.models.Participant
+import com.outrageouscat.shufflefriends.domain.respositories.SettingsRepository
 import com.outrageouscat.shufflefriends.ui.util.WhatsappMessageHelper
+import kotlinx.coroutines.flow.first
 
 class WhatsappMessageUseCase(
     private val context: Context,
+    private val settingsRepository: SettingsRepository
 ) {
 
-    fun sendMessage(
+    suspend fun sendMessage(
         selectedIndex: Int,
         participants: List<Participant>,
         results: Map<String, Participant>,
-    ) {
-        val giverName = participants[selectedIndex].name
+    ): Result<Unit> {
+
+        val settings = settingsRepository.settings.first()
+
+        // Validate
+        if (settings.deliveryDate.isBlank()) {
+            return Result.failure(Exception(context.getString(R.string.whatsapp_message_date_missing_alert_title)))
+        }
+
         val giverPhone = "57" + participants[selectedIndex].phoneNumber
 
+        launchWhatsappIntent(
+            whatsappMessage = buildMessage(
+                selectedIndex = selectedIndex,
+                participants = participants,
+                results = results,
+                customMessage = settings.customMessage,
+                deliveryDate = settings.deliveryDate
+            ),
+            giverPhone = giverPhone
+        )
+        return Result.success(Unit)
+    }
+
+    private fun buildMessage(
+        selectedIndex: Int,
+        participants: List<Participant>,
+        results: Map<String, Participant>,
+        customMessage: String,
+        deliveryDate: String
+    ): String {
+        val giverName = participants[selectedIndex].name
         val receiverName = results[giverName]?.name.toString()
         val receiverDescription = results[giverName]?.description.toString()
 
-        val whatsappMessage = WhatsappMessageHelper.createMessage(
+        return WhatsappMessageHelper.createMessage(
             context = context,
             giverName = giverName,
             receiverName = receiverName,
             receiverDescription = receiverDescription,
-            customMessage = "customMessage",
-            deliveryDate = "deliveryDate"
+            customMessage = customMessage,
+            deliveryDate = deliveryDate
         )
+    }
+
+    private fun launchWhatsappIntent(whatsappMessage: String, giverPhone: String) {
 
         val whatsappIntent = Intent(Intent.ACTION_SEND)
         whatsappIntent.type = "text/plain"
@@ -49,6 +83,5 @@ class WhatsappMessageUseCase(
                 Toast.LENGTH_SHORT
             ).show()
         }
-
     }
 }

@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class ResultsViewModel(
     private val participantsUseCase: ParticipantsUseCase,
@@ -45,6 +46,9 @@ class ResultsViewModel(
             index < participants.size - 1
         }
 
+    private val _alertMessage = MutableStateFlow<String?>(null)
+    val alertMessage: StateFlow<String?> = _alertMessage.asStateFlow()
+
     fun moveToPreviousParticipant() {
         _selectedIndex.update { index -> maxOf(index - 1, 0) }
     }
@@ -54,10 +58,24 @@ class ResultsViewModel(
     }
 
     fun sendMessage() {
-        whatsappMessageUseCase.sendMessage(
-            selectedIndex = _selectedIndex.value,
-            participants= participants.value,
-            results = results.value
-        )
+        viewModelScope.launch {
+            val sendingResult = whatsappMessageUseCase.sendMessage(
+                selectedIndex = _selectedIndex.value,
+                participants = participants.value,
+                results = results.value
+            )
+
+            sendingResult.onFailure {
+                _alertMessage.value = it.message
+            }
+
+            sendingResult.onSuccess {
+                _alertMessage.value = null
+            }
+        }
+    }
+
+    fun dismissAlert() {
+        _alertMessage.value = null
     }
 }

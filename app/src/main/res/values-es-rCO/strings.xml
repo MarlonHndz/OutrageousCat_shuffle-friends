@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Shuffle Friends</string>
-    <string name="developer_water_mark">© IamCleverito | Outrageous Cat\nVersion 1.0 2024</string>
+    <string name="developer_water_mark">© IamCleverito | Outrageous Cat\nVersion 1.0.0 2024</string>
 
     <string name="screen_home">Participantes</string>
     <string name="screen_results">Resultados</string>
@@ -76,6 +76,9 @@
     <string name="whatsapp_message_receiver_description">Quien dijo respecto a sus gustos:\n\n*%1$s*</string>
     <string name="whatsapp_message_date_label">\n\nRecuerda que la entrega de regalos 🎁 se realizará el *%1$s* 🎁</string>
     <string name="whatsapp_message_no_app_installed">No tienes WhatsApp instalado</string>
+    <string name="whatsapp_message_date_missing_alert_title">¡Falta la fecha de entrega!</string>
+    <string name="whatsapp_message_date_missing_alert_text">Establezca la fecha de entrega del regalo para adjuntarla en su mensaje, así como otros parámetros opcionales.</string>
+    <string name="whatsapp_message_date_missing_alert_confirm_button">Ir a configuración</string>
 
     <string-array name="months">
         <item>Enero</item>

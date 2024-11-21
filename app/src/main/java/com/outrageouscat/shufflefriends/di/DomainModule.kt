@@ -10,5 +10,5 @@ val domainModule = module {
     factory { ParticipantsUseCase(get()) }
     factory { ResultsUseCase(get()) }
     factory { SettingsUseCase(get()) }
-    factory { WhatsappMessageUseCase(get()) }
+    factory { WhatsappMessageUseCase(get(), get()) }
 }

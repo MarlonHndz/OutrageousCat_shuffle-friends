@@ -33,7 +33,8 @@ fun NavigationHost(
         composable(Screen.Results.route) {
             ResultsScreen(
                 modifier = Modifier.fillMaxSize(),
-                onBack = { navController.navigateUp() }
+                onBack = { navController.navigateUp() },
+                navController = navController
             )
         }
 
