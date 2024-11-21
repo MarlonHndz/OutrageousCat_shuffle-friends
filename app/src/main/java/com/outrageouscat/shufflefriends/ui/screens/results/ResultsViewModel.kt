@@ -43,10 +43,6 @@ class ResultsViewModel(
             index < participants.size - 1
         }
 
-    fun updateSelectedIndex(index: Int) {
-        _selectedIndex.value = index
-    }
-
     fun moveToPreviousParticipant() {
         _selectedIndex.update { index -> maxOf(index - 1, 0) }
     }
