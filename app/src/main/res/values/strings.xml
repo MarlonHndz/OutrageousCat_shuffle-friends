@@ -2,10 +2,12 @@
 <resources>
     <string name="app_name">Shuffle Friends</string>
     <string name="developer_water_mark">© Outrageous Cat | IamCleverito\nVersion 1.0.0 2024</string>
+    <string name="about_us_app_info">Current version: 1.0.0\nLast updated: November 25, 2024</string>
 
     <string name="screen_home">Participants list</string>
     <string name="screen_results">Results</string>
     <string name="screen_settings">Settings</string>
+    <string name="screen_about_us">Abouts us</string>
 
     <string name="content_description_app_logo">Shuffle friends</string>
     <string name="content_description_delete_icon_button">Delete all</string>
@@ -57,6 +59,9 @@
     <string name="settings_screen_title">Settings</string>
     <string name="settings_option_whatsapp_message">WhatsApp message</string>
     <string name="settings_option_delivery_date">Delivery date</string>
+    <string name="settings_section_title_help_and_opinion">Help and feedback</string>
+    <string name="settings_option_about_us">About us</string>
+    <string name="settings_option_rate_app">Rate the app</string>
 
     <string name="custom_message_alert_title">Personalize your message</string>
     <string name="custom_message_alert_label">Optional message</string>
@@ -79,6 +84,14 @@
     <string name="whatsapp_message_date_missing_alert_title">Delivery date is missing!</string>
     <string name="whatsapp_message_date_missing_alert_text">Set the gift delivery date to attach to your message, as well as other optional parameters.</string>
     <string name="whatsapp_message_date_missing_alert_confirm_button">Go to settings</string>
+
+    <string name="about_us_screen_title">About us</string>
+    <string name="about_us_outrageous_cat_section_title">Outrageous Cat</string>
+    <string name="about_us_outrageous_cat_slogan"> The art of simplicity to solve problems intelligently, practically, and efficiently. Say goodbye to complications!</string>
+    <string name="about_us_outrageous_cat_philosophy_text">We believe simplicity is the most elegant way to solve problems. Our goal is to turn everyday challenges into agile, easy-to-use solutions (because who needs unnecessary manuals?).\n\nWe were born with the idea of simplifying the complex through smart apps. Since then, we\'ve focused on creating functional tools that are as intuitive as they are practical.\n\nYour feedback drives us. We\'re always striving to improve, offering experiences that make your life simpler and more enjoyable.</string>
+    <string name="about_us_shuffle_friends_slogan">Drawing a Secret Santa should be simple. With Shuffle Friends, it is. Have fun, choose, and enjoy without the hassle.</string>
+    <string name="about_us_shuffle_friends_description_text">When did drawing a Secret Santa get so complicated? Shuffle Friends makes it incredibly simple, whether you\'re doing it in person or remotely. Just add the participants and the app takes care of the rest. It\'s that easy!\n\nYou can instantly share the results via WhatsApp, customizing the message to make it even more special. Plus, you can set a gift delivery date to ensure everything happens at the perfect time.\n\nThe app is designed to make the process fun, quick, and stress-free. If you\'re looking for an easy, hassle-free way to organize your Secret Santa draw, Shuffle Friends is all you need.</string>
+    <string name="about_us_shuffle_friends_app_info_label">App information:</string>
 
     <string-array name="months">
         <item>January</item>

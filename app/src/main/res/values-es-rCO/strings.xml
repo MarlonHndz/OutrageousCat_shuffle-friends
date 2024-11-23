@@ -2,10 +2,12 @@
 <resources>
     <string name="app_name">Shuffle Friends</string>
     <string name="developer_water_mark">© Outrageous Cat | IamCleverito\nVersion 1.0.0 2024</string>
+    <string name="about_us_app_info">Versión actual: 1.0.0\nÚltima actualización: 25 de Noviembre de 2024</string>
 
     <string name="screen_home">Participantes</string>
     <string name="screen_results">Resultados</string>
     <string name="screen_settings">Configuración</string>
+    <string name="screen_about_us">Acerda de</string>
 
     <string name="content_description_app_logo">Shuffle friends</string>
     <string name="content_description_delete_icon_button">Eliminar todos</string>
@@ -57,6 +59,9 @@
     <string name="settings_screen_title">Configuración</string>
     <string name="settings_option_whatsapp_message">Mensaje de WhatsApp</string>
     <string name="settings_option_delivery_date">Fecha de entrega</string>
+    <string name="settings_section_title_help_and_opinion">Ayuda y opinión</string>
+    <string name="settings_option_about_us">Acerca de</string>
+    <string name="settings_option_rate_app">Calificar la app</string>
 
     <string name="custom_message_alert_title">Personaliza tu mensaje</string>
     <string name="custom_message_alert_label">Mensaje Opcional</string>
@@ -79,6 +84,14 @@
     <string name="whatsapp_message_date_missing_alert_title">¡Falta la fecha de entrega!</string>
     <string name="whatsapp_message_date_missing_alert_text">Establezca la fecha de entrega del regalo para adjuntarla en su mensaje, así como otros parámetros opcionales.</string>
     <string name="whatsapp_message_date_missing_alert_confirm_button">Ir a configuración</string>
+
+    <string name="about_us_screen_title">Acerca de</string>
+    <string name="about_us_outrageous_cat_section_title">Outrageous Cat</string>
+    <string name="about_us_outrageous_cat_slogan">Ingeniería de lo simple para resolver problemas de forma inteligente, práctica y eficiente. ¡Menos complicaciones!</string>
+    <string name="about_us_outrageous_cat_philosophy_text">Creemos que la simplicidad es la forma más elegante de resolver problemas. Nuestro propósito es transformar desafíos cotidianos en soluciones ágiles y fáciles de usar (nadie quiere manuales innecesarios).\n\nNacimos con la idea de simplificar lo complejo a través de aplicaciones inteligentes. Desde entonces, nos dedicamos a diseñar herramientas funcionales que son tan prácticas como intuitivas.\n\nTu opinión nos impulsa. Siempre buscamos mejorar para ofrecerte experiencias que hagan tu vida más simple y agradable.</string>
+    <string name="about_us_shuffle_friends_slogan">Sortear un amigo secreto debería ser simple. Con Shuffle Friends, lo es. Diviértete, elige y disfruta sin complicaciones.</string>
+    <string name="about_us_shuffle_friends_description_text">¿En qué momento sortear un amigo secreto se volvió tan complicado? Shuffle Friends simplifica al máximo el sorteo de amigo secreto, ya sea en persona o a distancia. Solo agrega a los participantes y la app se encarga del resto. ¡Así de fácil!\n\nPuedes compartir los resultados al instante por WhatsApp, personalizando el mensaje para hacerlo aún más especial. Además, puedes fijar la fecha de entrega de los regalos para que todo se haga en el momento perfecto.\n\nLa app está diseñada para que el proceso sea divertido, rápido y sin estrés. Si buscas una forma ágil y sin complicaciones de organizar tu sorteo de amigo secreto, Shuffle Friends es lo que necesitas.</string>
+    <string name="about_us_shuffle_friends_app_info_label">Información de la app</string>
 
     <string-array name="months">
         <item>Enero</item>

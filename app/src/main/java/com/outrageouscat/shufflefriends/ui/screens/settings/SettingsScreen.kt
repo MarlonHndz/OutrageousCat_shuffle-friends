@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,10 +40,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.outrageouscat.shufflefriends.R
 import com.outrageouscat.shufflefriends.ui.composables.rememberDatePickerDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.CustomMessageConfigDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.PreviewWhatsappMessageDialog
+import com.outrageouscat.shufflefriends.ui.navigation.Screen
 import com.outrageouscat.shufflefriends.ui.util.toMonthName
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -51,6 +56,7 @@ fun SettingsScreen(
     context: Context,
     modifier: Modifier,
     onBack: () -> Unit,
+    navController: NavHostController,
     viewModel: SettingsViewModel = koinViewModel()
 ) {
 
@@ -99,6 +105,7 @@ fun SettingsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(bottom = 80.dp),
             ) {
                 Text(
@@ -174,6 +181,63 @@ fun SettingsScreen(
                     modifier = Modifier.padding(horizontal = 6.dp),
                     thickness = 1.dp
                 )
+
+                // About us section
+                Text(
+                    modifier = Modifier.padding(
+                        start = 8.dp,
+                        end = 8.dp,
+                        top = 40.dp,
+                        bottom = 8.dp
+                    ),
+                    text = stringResource(R.string.settings_section_title_help_and_opinion),
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.W300,
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            navController.navigate(Screen.AboutUs.route)
+                        }
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        text = stringResource(R.string.settings_option_about_us),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.W300,
+                    )
+
+                }
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 6.dp),
+                    thickness = 1.dp
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+
+                        }
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        text = stringResource(R.string.settings_option_rate_app),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.W300,
+                    )
+                }
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 6.dp),
+                    thickness = 1.dp
+                )
+
             }
 
             Text(
