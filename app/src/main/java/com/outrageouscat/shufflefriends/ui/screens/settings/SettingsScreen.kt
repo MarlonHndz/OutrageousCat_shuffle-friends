@@ -1,6 +1,8 @@
 package com.outrageouscat.shufflefriends.ui.screens.settings
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -40,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import com.outrageouscat.shufflefriends.R
 import com.outrageouscat.shufflefriends.ui.composables.rememberDatePickerDialog
@@ -221,7 +224,7 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-
+                            openPlayStore( context.packageName, context)
                         }
                 ) {
                     Text(
@@ -283,4 +286,11 @@ fun SettingsScreen(
             }
         }
     }
+}
+
+fun openPlayStore(packageName: String, context: Context) {
+    val uri = Uri.parse("market://details?id=$packageName") // Sustituye com.tuapp con el ID de tu app en Play Store
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+    context.startActivity(intent)
 }

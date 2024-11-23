@@ -59,7 +59,7 @@
     <string name="settings_screen_title">Configuración</string>
     <string name="settings_option_whatsapp_message">Mensaje de WhatsApp</string>
     <string name="settings_option_delivery_date">Fecha de entrega</string>
-    <string name="settings_section_title_help_and_opinion">Ayuda y opinión</string>
+    <string name="settings_section_title_help_and_opinion">Sobre nosotros</string>
     <string name="settings_option_about_us">Acerca de</string>
     <string name="settings_option_rate_app">Calificar la app</string>
 
