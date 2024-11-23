@@ -45,6 +45,12 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val countryCodes = remember {
+        context.resources.getStringArray(R.array.countries_codes)
+            .map { it.split(",") }
+            .map { it[0] to it[1] }
+    }
+
     Scaffold(
         modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -52,31 +58,46 @@ fun HomeScreen(
 
         ParticipantsContent(
             modifier = Modifier.fillMaxSize(),
+            countryCodes = countryCodes,
             participants = participantsList,
-            onAddParticipant = { name, phoneNumber, description ->
+            onAddParticipant = { name, countryCode, phoneNumber, description ->
                 if (participantsList.any { it.name == name }) {
                     errorMessage =
                         context.getString(R.string.error_message_participant_already_exist, name)
                     scope.launch { snackbarHostState.showSnackbar(errorMessage) }
                 } else {
-                   viewModel.saveParticipants(participantsList + Participant(name, phoneNumber, description))
+                    viewModel.saveParticipants(
+                        participantsList + Participant(
+                            name = name,
+                            countryCode = countryCode,
+                            phoneNumber = phoneNumber,
+                            description = description
+                        )
+                    )
                     errorMessage = ""
                 }
             },
-            onEditParticipant = { index, newName, newPhoneNumber, newDescription ->
+            onEditParticipant = { index, newName, newCountryCode, newPhoneNumber, newDescription ->
                 if (participantsList.any { it.name == newName && it != participantsList[index] }) {
                     errorMessage =
                         context.getString(R.string.error_message_participant_already_exist, newName)
                     scope.launch { snackbarHostState.showSnackbar(errorMessage) }
                 } else {
                     val updatedParticipants = participantsList.toMutableList().apply {
-                        this[index] = Participant(newName, newPhoneNumber, newDescription)
+                        this[index] =
+                            Participant(
+                                newName,
+                                newCountryCode,
+                                newPhoneNumber,
+                                newDescription
+                            )
                     }
                     viewModel.saveParticipants(updatedParticipants)
                 }
             },
             onRemoveParticipant = { index ->
-                viewModel.saveParticipants(participantsList.toMutableList().apply { removeAt(index) })
+                viewModel.saveParticipants(
+                    participantsList.toMutableList().apply { removeAt(index) })
             },
             onSeeResults = {
                 navController.navigate(Screen.Results.route)

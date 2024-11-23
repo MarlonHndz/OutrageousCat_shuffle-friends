@@ -28,7 +28,8 @@ class WhatsappMessageUseCase(
             return Result.failure(Exception(context.getString(R.string.whatsapp_message_date_missing_alert_title)))
         }
 
-        val giverPhone = "57" + participants[selectedIndex].phoneNumber
+        val giverPhone =
+            participants[selectedIndex].countryCode + participants[selectedIndex].phoneNumber
 
         launchWhatsappIntent(
             whatsappMessage = buildMessage(

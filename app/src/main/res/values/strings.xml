@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Shuffle Friends</string>
-    <string name="developer_water_mark">© IamCleverito | Outrageous Cat\nVersion 1.0.0 2024</string>
+    <string name="developer_water_mark">© Outrageous Cat | IamCleverito\nVersion 1.0.0 2024</string>
 
     <string name="screen_home">Participants list</string>
     <string name="screen_results">Results</string>
@@ -93,6 +93,35 @@
         <item>October</item>
         <item>November</item>
         <item>December</item>
+    </string-array>
+
+    <string-array name="countries_codes">
+        <!-- Format: Code, Country -->
+        <item>57,Colombia</item>
+        <item>54,Argentina</item>
+        <item>1,Bahamas</item>
+        <item>501,Belize</item>
+        <item>591,Bolivia</item>
+        <item>56,Chile</item>
+        <item>506,Costa Rica</item>
+        <item>53,Cuba</item>
+        <item>1,Dominican Republic</item>
+        <item>593,Ecuador</item>
+        <item>503,El Salvador</item>
+        <item>502,Guatemala</item>
+        <item>592,Guyana</item>
+        <item>504,Honduras</item>
+        <item>1,Jamaica</item>
+        <item>52,Mexico</item>
+        <item>505,Nicaragua</item>
+        <item>507,Panama</item>
+        <item>595,Paraguay</item>
+        <item>51,Peru</item>
+        <item>1,Puerto Rico</item>
+        <item>34,Spain</item>
+        <item>1,United States</item>
+        <item>598,Uruguay</item>
+        <item>58,Venezuela</item>
     </string-array>
 
 </resources>

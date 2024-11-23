@@ -17,6 +17,7 @@ class ResultsRepositoryImpl(
             resultsList.resultsMap.map { (key, value) ->
                 key to Participant(
                     name = value.name,
+                    countryCode = value.countryCode,
                     phoneNumber = value.phoneNumber,
                     description = value.description
                 )

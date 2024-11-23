@@ -5,8 +5,9 @@ option java_outer_classname = "ResultsProto";
 
 message ParticipantLocal {
     string name = 1;
-    string phone_number = 2;
-    string description = 3;
+    string country_code = 2;
+    string phone_number = 3;
+    string description = 4;
 }
 
 message ResultsList {

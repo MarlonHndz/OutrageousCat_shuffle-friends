@@ -92,12 +92,13 @@ fun RevelationDialog(
 fun PreviewRevelationDialog() {
     val participant = Participant(
         name = stringResource(R.string.message_preview_example_giver_name),
+        countryCode = "",
         phoneNumber = "",
         description = stringResource(R.string.message_preview_example_receiver_description)
     )
     val results = mapOf<String, Participant>(
-        stringResource(R.string.message_preview_example_giver_name)to
-        participant
+        stringResource(R.string.message_preview_example_giver_name) to
+                participant
     )
     RevelationDialog(
         participants = listOf(participant),

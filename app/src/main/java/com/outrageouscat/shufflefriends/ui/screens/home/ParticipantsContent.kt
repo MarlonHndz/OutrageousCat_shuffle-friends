@@ -50,14 +50,17 @@ import com.outrageouscat.shufflefriends.R
 import com.outrageouscat.shufflefriends.data.models.Participant
 import com.outrageouscat.shufflefriends.ui.composables.SwipeBox
 import com.outrageouscat.shufflefriends.ui.dialogs.AddOrEditParticipantDialog
+import kotlin.Pair
+import kotlin.String
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ParticipantsContent(
     modifier: Modifier,
+    countryCodes: List<Pair<String, String>>,
     participants: List<Participant>,
-    onAddParticipant: (String, String, String) -> Unit,
-    onEditParticipant: (Int, String, String, String) -> Unit,
+    onAddParticipant: (String, String, String, String) -> Unit,
+    onEditParticipant: (Int, String, String, String, String) -> Unit,
     onRemoveParticipant: (Int) -> Unit,
     onShuffle: () -> Unit,
     onSeeResults: () -> Unit,
@@ -72,6 +75,8 @@ fun ParticipantsContent(
     var editParticipantDialog by remember { mutableStateOf(false) }
     var editingParticipant by remember { mutableStateOf(Participant("", "", "")) }
     var editingIndex by remember { mutableIntStateOf(-1) }
+
+
 
     Scaffold(
         modifier = modifier,
@@ -191,7 +196,7 @@ fun ParticipantsContent(
                                     )
                                     if (participant.phoneNumber.isNotEmpty()) {
                                         Text(
-                                            text = participant.phoneNumber,
+                                            text = participant.countryCode + " " + participant.phoneNumber,
                                             fontSize = 18.sp,
                                             fontWeight = FontWeight.W400,
                                             maxLines = 1,
@@ -294,8 +299,9 @@ fun ParticipantsContent(
             if (showAddParticipantDialog) {
                 AddOrEditParticipantDialog(
                     alertTitle = stringResource(R.string.add_edit_alert_title_add_participant),
-                    onConfirm = { name, phone, description ->
-                        onAddParticipant(name, phone, description)
+                    countryCodes = countryCodes,
+                    onConfirm = { name, countryCode, phone, description ->
+                        onAddParticipant(name, countryCode, phone, description)
                         onDismissAddDialog()
                     },
                     onDismiss = onDismissAddDialog,
@@ -308,10 +314,12 @@ fun ParticipantsContent(
                     initialName = editingParticipant.name,
                     initialPhone = editingParticipant.phoneNumber,
                     initialDescription = editingParticipant.description,
-                    onConfirm = { newName, newPhoneNumber, newDescription ->
+                    countryCodes = countryCodes,
+                    onConfirm = { newName, newCountryCode, newPhoneNumber, newDescription ->
                         onEditParticipant(
                             editingIndex,
                             newName,
+                            newCountryCode,
                             newPhoneNumber,
                             newDescription,
                         )

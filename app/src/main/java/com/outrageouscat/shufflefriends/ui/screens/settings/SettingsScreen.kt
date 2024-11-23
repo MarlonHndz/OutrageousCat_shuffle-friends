@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -185,6 +186,14 @@ fun SettingsScreen(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W300,
                 fontStyle = FontStyle.Italic
+            )
+            Image(
+                modifier = Modifier
+                    .height(65.dp)
+                    .padding(8.dp)
+                    .align(Alignment.BottomEnd),
+                painter = painterResource(R.drawable.outrageous_cat_logo_no_bg),
+                contentDescription = "",
             )
 
             if (showEditCustomMessageDialog) {
