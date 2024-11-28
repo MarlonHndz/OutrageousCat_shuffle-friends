@@ -13,7 +13,7 @@
     <string name="content_description_delete_icon_button">Delete all</string>
     <string name="content_description_shuffle_icon_button">Shuffle friends again</string>
     <string name="content_description_add_participant_floating_button">Add participants</string>
-    <string name="content_description_edit_button">Edit button</string>
+    <string name="content_description_edit_button">Edit participant %1$s</string>
     <string name="content_description_shuffle_icon">Shuffle icon</string>
     <string name="content_description_results_icon">Results icon</string>
     <string name="content_description_back_icon">Back icon</string>
@@ -21,6 +21,7 @@
     <string name="content_description_whatsapp_icon">WhatsApp icon</string>
     <string name="content_description_settings_icon">Settings icon</string>
     <string name="content_description_whatsapp_eye_icon">See WhatsApp message</string>
+    <string name="content_description_outrageous_cat_logo">Outrageous Cat logo</string>
 
     <string name="error_message_participant_already_exist">The participant \'%1$s\' already exists.</string>
 

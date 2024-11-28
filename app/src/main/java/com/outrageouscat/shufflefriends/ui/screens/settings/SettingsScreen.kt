@@ -21,6 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -174,7 +175,7 @@ fun SettingsScreen(
                             .padding(horizontal = 8.dp)
                             .align(Alignment.CenterVertically),
                         text = settings.deliveryDate,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.W300,
                         fontStyle = FontStyle.Italic
@@ -224,7 +225,7 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            openPlayStore( context.packageName, context)
+                            openPlayStore(context.packageName, context)
                         }
                 ) {
                     Text(
@@ -260,7 +261,7 @@ fun SettingsScreen(
                     .padding(8.dp)
                     .align(Alignment.BottomEnd),
                 painter = painterResource(R.drawable.outrageous_cat_logo_no_bg),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.content_description_outrageous_cat_logo),
             )
 
             if (showEditCustomMessageDialog) {

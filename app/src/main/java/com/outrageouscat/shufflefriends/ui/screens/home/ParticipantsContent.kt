@@ -204,7 +204,6 @@ fun ParticipantsContent(
                                             fontWeight = FontWeight.W400,
                                             maxLines = 1,
                                             overflow = TextOverflow.Ellipsis,
-                                            color = Color.DarkGray
                                         )
                                     }
                                     if (participant.description.isNotEmpty()) {
@@ -231,7 +230,10 @@ fun ParticipantsContent(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Outlined.Edit,
-                                            contentDescription = stringResource(R.string.content_description_edit_button)
+                                            contentDescription = stringResource(
+                                                R.string.content_description_edit_button,
+                                                participant.name
+                                            )
                                         )
                                     }
 //                                    IconButton(onClick = { onRemoveParticipant(index) }) {
@@ -258,7 +260,7 @@ fun ParticipantsContent(
                         .align(Alignment.BottomCenter)
                         .padding(16.dp),
                     onClick = onShuffle,
-                    enabled = participants.size % 2 == 0 && participants.size > 1,
+                    enabled = participants.size > 1,
                     colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                 ) {
                     Text(

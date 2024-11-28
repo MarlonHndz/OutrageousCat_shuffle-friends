@@ -13,7 +13,7 @@
     <string name="content_description_delete_icon_button">Eliminar todos</string>
     <string name="content_description_shuffle_icon_button">Mezclar de nuevo</string>
     <string name="content_description_add_participant_floating_button">Agregar participante</string>
-    <string name="content_description_edit_button">Botón editar</string>
+    <string name="content_description_edit_button">Editar participante %1$s</string>
     <string name="content_description_shuffle_icon">Icono mezclar</string>
     <string name="content_description_results_icon">Icono resultados</string>
     <string name="content_description_back_icon">Icono volver</string>
@@ -21,6 +21,7 @@
     <string name="content_description_whatsapp_icon">icono Whatsapp</string>
     <string name="content_description_settings_icon">Settings icon</string>
     <string name="content_description_whatsapp_eye_icon">Ver mensaje de WhatsApp</string>
+    <string name="content_description_outrageous_cat_logo">Outrageous Cat logo</string>
 
     <string name="error_message_participant_already_exist">El participante \'%1$s\' ya existe.</string>
 
