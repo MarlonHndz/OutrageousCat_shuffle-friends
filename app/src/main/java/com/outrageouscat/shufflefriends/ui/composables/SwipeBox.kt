@@ -39,20 +39,20 @@ fun SwipeBox(
         SwipeToDismissBoxValue.EndToStart -> {
             icon = Icons.Outlined.Delete
             alignment = Alignment.CenterEnd
-            color = MaterialTheme.colorScheme.errorContainer
+            color = Color.Red.copy(alpha = 0.6f)
         }
 
         SwipeToDismissBoxValue.StartToEnd -> {
             icon = Icons.Outlined.Edit
             alignment = Alignment.CenterStart
             color =
-                Color.Green.copy(alpha = 0.3f) // You can generate theme for successContainer in themeBuilder
+                Color.Green.copy(alpha = 0.5f) // You can generate theme for successContainer in themeBuilder
         }
 
         SwipeToDismissBoxValue.Settled -> {
             icon = Icons.Outlined.Delete
             alignment = Alignment.CenterEnd
-            color = MaterialTheme.colorScheme.errorContainer
+            color = Color.Red.copy(alpha = 0.6f)
         }
     }
 
