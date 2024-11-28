@@ -19,6 +19,7 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -37,7 +38,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -50,6 +50,7 @@ import com.outrageouscat.shufflefriends.R
 import com.outrageouscat.shufflefriends.data.models.Participant
 import com.outrageouscat.shufflefriends.ui.composables.SwipeBox
 import com.outrageouscat.shufflefriends.ui.dialogs.AddOrEditParticipantDialog
+import com.outrageouscat.shufflefriends.ui.theme.buttonBackground
 import kotlin.Pair
 import kotlin.String
 
@@ -98,7 +99,8 @@ fun ParticipantsContent(
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.Delete,
-                                contentDescription = stringResource(R.string.content_description_delete_icon_button)
+                                contentDescription = stringResource(R.string.content_description_delete_icon_button),
+                                tint = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -107,12 +109,12 @@ fun ParticipantsContent(
                         IconButton(
                             onClick = onShuffleAgain
                         ) {
-                            Image(
+                            Icon(
                                 painter = painterResource(id = R.drawable.shuffle_default_icon),
                                 contentDescription = stringResource(R.string.content_description_shuffle_icon_button),
                                 modifier = Modifier
                                     .size(22.dp),
-                                colorFilter = ColorFilter.tint(color = Color.Black)
+                                tint = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -122,7 +124,8 @@ fun ParticipantsContent(
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Settings,
-                            contentDescription = stringResource(R.string.content_description_settings_icon)
+                            contentDescription = stringResource(R.string.content_description_settings_icon),
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }
@@ -255,7 +258,8 @@ fun ParticipantsContent(
                         .align(Alignment.BottomCenter)
                         .padding(16.dp),
                     onClick = onShuffle,
-                    enabled = participants.size % 2 == 0 && participants.size > 1
+                    enabled = participants.size % 2 == 0 && participants.size > 1,
+                    colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 4.dp),
@@ -278,7 +282,8 @@ fun ParticipantsContent(
                         .align(Alignment.BottomCenter)
                         .padding(16.dp),
                     onClick = onSeeResults,
-                    enabled = participants.size % 2 == 0 && participants.size > 1
+                    enabled = participants.size > 1,
+                    colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 4.dp),

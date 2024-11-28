@@ -17,11 +17,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -49,6 +51,7 @@ import com.outrageouscat.shufflefriends.R
 import com.outrageouscat.shufflefriends.ui.dialogs.DateIsMissingAlertDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.RevelationDialog
 import com.outrageouscat.shufflefriends.ui.navigation.Screen
+import com.outrageouscat.shufflefriends.ui.theme.buttonBackground
 import org.koin.androidx.compose.koinViewModel
 import kotlin.random.Random
 
@@ -163,7 +166,8 @@ fun ResultsScreen(
                         .padding(16.dp)
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
-                    onClick = { showResultDialog = true }
+                    onClick = { showResultDialog = true },
+                    colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 4.dp),
@@ -188,7 +192,8 @@ fun ResultsScreen(
                         .align(Alignment.CenterHorizontally),
                     onClick = {
                         viewModel.sendMessage()
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 4.dp),
@@ -212,7 +217,7 @@ fun ResultsScreen(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.W300,
                     fontStyle = FontStyle.Italic,
-                    color = Color.DarkGray
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 if (showResultDialog && selectedIndex in participants.indices) {
@@ -245,17 +250,25 @@ fun ResultsScreen(
                 // Previous Button
                 Button(
                     onClick = { viewModel.moveToPreviousParticipant() },
-                    enabled = viewModel.canMoveToPrevious.collectAsState(initial = false).value
+                    enabled = viewModel.canMoveToPrevious.collectAsState(initial = false).value,
+                    colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                 ) {
-                    Text(stringResource(R.string.results_previous_button))
+                    Text(
+                        text = stringResource(R.string.results_previous_button),
+                        color = Color.White
+                    )
                 }
 
                 // Next Button
                 Button(
                     onClick = { viewModel.moveToNextParticipant() },
-                    enabled = viewModel.canMoveToNext.collectAsState(initial = false).value
+                    enabled = viewModel.canMoveToNext.collectAsState(initial = false).value,
+                    colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                 ) {
-                    Text(stringResource(R.string.results_next_button))
+                    Text(
+                        text = stringResource(R.string.results_next_button),
+                        color = Color.White
+                    )
                 }
             }
         }
