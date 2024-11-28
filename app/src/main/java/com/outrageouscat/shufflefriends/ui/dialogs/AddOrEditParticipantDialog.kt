@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -37,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.outrageouscat.shufflefriends.R
+import com.outrageouscat.shufflefriends.ui.theme.buttonBackground
 
 @Composable
 fun AddOrEditParticipantDialog(
@@ -145,18 +148,26 @@ fun AddOrEditParticipantDialog(
                     horizontalArrangement = Arrangement.End
                 ) {
                     Button(
-                        onClick = onDismiss
+                        onClick = onDismiss,
+                        colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                     ) {
-                        Text(stringResource(R.string.add_edit_alert_cancel_button))
+                        Text(
+                            text = stringResource(R.string.add_edit_alert_cancel_button),
+                            color = Color.White
+                        )
                     }
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
                         onClick = {
                             if (name.isNotEmpty()) onConfirm(name, selectedCode, phone, description)
                         },
-                        enabled = name.isNotEmpty()
+                        enabled = name.isNotEmpty(),
+                        colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                     ) {
-                        Text(stringResource(R.string.add_edit_alert_acept_button))
+                        Text(
+                            text = stringResource(R.string.add_edit_alert_acept_button),
+                            color = Color.White
+                        )
                     }
                 }
             }
