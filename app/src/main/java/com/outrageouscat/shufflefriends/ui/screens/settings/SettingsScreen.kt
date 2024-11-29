@@ -50,7 +50,9 @@ import com.outrageouscat.shufflefriends.ui.composables.rememberDatePickerDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.CustomMessageConfigDialog
 import com.outrageouscat.shufflefriends.ui.dialogs.PreviewWhatsappMessageDialog
 import com.outrageouscat.shufflefriends.ui.navigation.Screen
+import com.outrageouscat.shufflefriends.ui.util.toLocalizedOrdinal
 import com.outrageouscat.shufflefriends.ui.util.toMonthName
+import com.outrageouscat.shufflefriends.ui.util.toOrdinal
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -71,7 +73,11 @@ fun SettingsScreen(
     val scope = rememberCoroutineScope()
 
     val datePickerDialog = rememberDatePickerDialog(onDateSelected = { day, month ->
-        val deliveryDate = "$day de ${month.toMonthName(context)}"
+        val deliveryDate = context.getString(
+            R.string.whatsapp_message_delivery_date_value,
+            day.toLocalizedOrdinal(context),
+            month.toMonthName(context)
+        )
         viewModel.updateDeliveryDate(deliveryDate)
     })
 

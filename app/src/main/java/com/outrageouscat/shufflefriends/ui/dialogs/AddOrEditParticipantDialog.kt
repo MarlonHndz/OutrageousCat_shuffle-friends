@@ -159,7 +159,12 @@ fun AddOrEditParticipantDialog(
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
                         onClick = {
-                            if (name.isNotEmpty()) onConfirm(name, selectedCode, phone, description)
+                            if (name.isNotEmpty()) onConfirm(
+                                name.trimEnd(),
+                                selectedCode,
+                                phone,
+                                description.trimEnd()
+                            )
                         },
                         enabled = name.isNotEmpty(),
                         colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
