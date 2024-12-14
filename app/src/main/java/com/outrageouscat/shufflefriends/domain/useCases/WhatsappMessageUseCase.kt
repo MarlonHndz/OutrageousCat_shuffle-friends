@@ -3,6 +3,7 @@ package com.outrageouscat.shufflefriends.domain.useCases
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import com.outrageouscat.shufflefriends.R
 import com.outrageouscat.shufflefriends.data.models.Participant
@@ -66,13 +67,12 @@ class WhatsappMessageUseCase(
     }
 
     private fun launchWhatsappIntent(whatsappMessage: String, giverPhone: String) {
+        val whatsappUri = "https://wa.me/$giverPhone?text=${Uri.encode(whatsappMessage)}"
 
-        val whatsappIntent = Intent(Intent.ACTION_SEND)
-        whatsappIntent.type = "text/plain"
-        whatsappIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        whatsappIntent.setPackage("com.whatsapp")
-        whatsappIntent.putExtra(Intent.EXTRA_TEXT, whatsappMessage)
-        whatsappIntent.putExtra("jid", "$giverPhone@s.whatsapp.net")
+        val whatsappIntent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(whatsappUri)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
 
         try {
             context.startActivity(whatsappIntent)
