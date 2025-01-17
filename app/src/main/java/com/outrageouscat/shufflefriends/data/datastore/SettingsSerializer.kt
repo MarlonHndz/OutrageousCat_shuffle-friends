@@ -2,7 +2,7 @@ package com.outrageouscat.shufflefriends.data.datastore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
+import com.google.protobuf.InvalidProtocolBufferException
 import com.outrageouscat.shufflefriends.datastore.SettingsProto.SettingsLocal
 import java.io.InputStream
 import java.io.OutputStream
