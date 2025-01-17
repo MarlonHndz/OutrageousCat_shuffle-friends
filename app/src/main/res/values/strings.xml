@@ -69,6 +69,10 @@
     <string name="custom_message_alert_placeholder">Ex: Do not reveal this top secret information to anyone</string>
     <string name="custom_message_alert_save_button">Save</string>
 
+    <string name="delete_participant_alert_title">Delete participant?</string>
+    <string name="delete_participant_alert_delete_button">Delete</string>
+    <string name="delete_participant_alert_cancel_button">Cancel</string>
+
     <string name="message_preview_title">Whatsapp message</string>
     <string name="message_preview_note">Note: Values that appear between asterisks such as *Alice* will appear in bold within WhatsApp. Ex:</string>
     <string name="message_preview_example_hello">"Hello "</string>

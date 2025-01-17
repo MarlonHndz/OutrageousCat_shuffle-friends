@@ -69,6 +69,10 @@
     <string name="custom_message_alert_placeholder">Ej: No reveles está información ultra secreta con nadie</string>
     <string name="custom_message_alert_save_button">Guardar</string>
 
+    <string name="delete_participant_alert_title">¿Eliminar participante?</string>
+    <string name="delete_participant_alert_delete_button">Borrar</string>
+    <string name="delete_participant_alert_cancel_button">Cancelar</string>
+
     <string name="message_preview_title">Mensaje de Whatsapp</string>
     <string name="message_preview_note">Nota: Los valores que aparecen entre astericos como *Alicia* se verán en negrita dentro de WhatsApp. Ej:</string>
     <string name="message_preview_example_hello">"Hola "</string>
